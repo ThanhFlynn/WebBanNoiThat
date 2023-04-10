@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 # Create your models here.
 
@@ -12,3 +13,13 @@ class Note(models.Model):
     
     class Meta:
         ordering = ['-updated', '-created']
+
+class Customer(models.Model):
+    userName = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    password = models.CharField(max_length=100)
+    address_line = models.CharField(max_length=255)
+    telephone = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.userName

@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Note
-from .serializers import NodeSerializer
+from .models import Note, Customer
+from .serializers import NodeSerializer, CustomerSerializer
+from .utils import NoteController, CustomerController
 
 # Create your views here.
 
@@ -30,13 +31,43 @@ def getRoutes(request):
             'description': 'Creates new note with data sent in post request'
         },
         {
-            'Endpoint': '/notes/id/update/',
+            'Endpoint': '/notes/update/id',
             'method': 'PUT',
             'body': {'body': ""},
             'description': 'Creates an existing note with data sent in post request'
         },
         {
-            'Endpoint': '/notes/id/delete/',
+            'Endpoint': '/notes/delete/id',
+            'method': 'DELETE',
+            'body': None,
+            'description': 'Deletes and exiting note'
+        },
+        {
+            'Endpoint': '/account/',
+            'method': 'GET',
+            'body': None,
+            'description': 'Returns an array of notes'
+        },
+        {
+            'Endpoint': '/account/id',
+            'method': 'GET',
+            'body': None,
+            'description': 'Returns a single note object'
+        },
+        {
+            'Endpoint': '/account/create/',
+            'method': 'POST',
+            'body': {'body': ""},
+            'description': 'Creates new note with data sent in post request'
+        },
+        {
+            'Endpoint': '/account/update/id',
+            'method': 'PUT',
+            'body': {'body': ""},
+            'description': 'Creates an existing note with data sent in post request'
+        },
+        {
+            'Endpoint': '/account/delete/id',
             'method': 'DELETE',
             'body': None,
             'description': 'Deletes and exiting note'
@@ -44,40 +75,47 @@ def getRoutes(request):
     ]
     return Response(routes)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def getNotes(request):
-    notes = Note.objects.all()
-    serializer = NodeSerializer(notes, many=True)
-    return Response(serializer.data)
 
-@api_view(['GET'])
+    if request.method == 'GET':
+        return NoteController.getNotesList(request)
+
+    if request.method == 'POST':
+        return NoteController.createNote(request)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
 def getNote(request, pk):
-    note = Note.objects.get(id=pk)
-    serializer = NodeSerializer(note, many=False)
-    return Response(serializer.data)
 
-@api_view(['POST'])
-def createNote(request):
-    data = request.data
-    note = Note.objects.create(
-        body=data['body']
-    )
-    serializer = NodeSerializer(note, many=False)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        return NoteController.getNoteDetail(request, pk)
 
-@api_view(['PUT'])
-def updateNote(request, pk):
-    data = request.data
-    note = Note.objects.get(id=pk)
-    serializer = NodeSerializer(instance=note, data=data)
+    if request.method == 'PUT':
+        return NoteController.updateNote(request, pk)
 
-    if serializer.is_valid():
-        serializer.save()
+    if request.method == 'DELETE':
+        return NoteController.deleteNote(request, pk)
+    
 
-    return Response(serializer.data)
+@api_view(['GET', 'POST'])
+def getAccounts(request):
 
-@api_view(['DELETE'])
-def deleteNote(request, pk):
-    note = Note.objects.get(id=pk)
-    note.delete()
-    return Response('Note was delete!')
+    if request.method == 'GET':
+        return CustomerController.getAccountsList(request)
+
+    if request.method == 'POST':
+        return CustomerController.createAccount(request)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def getAccount(request, pk):
+
+    if request.method == 'GET':
+        return CustomerController.getAccountDetail(request, pk)
+
+    if request.method == 'PUT':
+        return CustomerController.updateAccount(request, pk)
+
+    if request.method == 'DELETE':
+        return CustomerController.deleteAccount(request, pk)
