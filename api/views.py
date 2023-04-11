@@ -46,7 +46,13 @@ def getRoutes(request):
             'Endpoint': '/account/',
             'method': 'GET',
             'body': None,
-            'description': 'Returns an array of notes'
+            'description': 'Returns an array of account'
+        },
+        {
+            'Endpoint': '/account/login',
+            'method': 'GET',
+            'body': None,
+            'description': 'Returns an array of account'
         },
         {
             'Endpoint': '/account/id',
