@@ -56,10 +56,10 @@ class CustomerController:
     def createAccount(request):
         data = request.data
         account = Customer.objects.create(
-            userName=data['userName'],
+            username=data['username'],
             email=data['email'],
             password=data['password'],
-            address_line=data['address_line'],
+            address=data['address'],
             telephone=data['telephone']
         )
         serializer = CustomerSerializer(account, many=False)

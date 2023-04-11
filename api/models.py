@@ -15,11 +15,11 @@ class Note(models.Model):
         ordering = ['-updated', '-created']
 
 class Customer(models.Model):
-    userName = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     password = models.CharField(max_length=100)
-    address_line = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
     telephone = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.userName
+        return self.username

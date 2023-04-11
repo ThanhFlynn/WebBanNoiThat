@@ -43,37 +43,31 @@ def getRoutes(request):
             'description': 'Deletes and exiting note'
         },
         {
-            'Endpoint': '/account/',
+            'Endpoint': '/accounts/',
             'method': 'GET',
             'body': None,
             'description': 'Returns an array of account'
         },
         {
-            'Endpoint': '/account/login',
-            'method': 'GET',
-            'body': None,
-            'description': 'Returns an array of account'
-        },
-        {
-            'Endpoint': '/account/id',
+            'Endpoint': '/accounts/id',
             'method': 'GET',
             'body': None,
             'description': 'Returns a single note object'
         },
         {
-            'Endpoint': '/account/create/',
+            'Endpoint': '/accounts/create/',
             'method': 'POST',
             'body': {'body': ""},
             'description': 'Creates new note with data sent in post request'
         },
         {
-            'Endpoint': '/account/update/id',
+            'Endpoint': '/accounts/update/id',
             'method': 'PUT',
             'body': {'body': ""},
             'description': 'Creates an existing note with data sent in post request'
         },
         {
-            'Endpoint': '/account/delete/id',
+            'Endpoint': '/accounts/delete/id',
             'method': 'DELETE',
             'body': None,
             'description': 'Deletes and exiting note'
