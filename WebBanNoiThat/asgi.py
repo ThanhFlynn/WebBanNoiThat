@@ -1,5 +1,5 @@
 """
-ASGI config for MyNotes project.
+ASGI config for WebBanNoiThat project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

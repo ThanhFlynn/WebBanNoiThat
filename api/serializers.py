@@ -1,14 +1,17 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Note, Customer
-from django import forms
+from rest_framework import serializers
+from .models import Note, User
 
-class NodeSerializer(ModelSerializer):
+class NoteSerializer(ModelSerializer):
     class Meta:
         model = Note 
         fields = '__all__'
-        
-class CustomerSerializer(ModelSerializer):
-    password = forms.CharField(widget=forms.PasswordInput)
+
+class UserSerializer(ModelSerializer):
     class Meta:
-        model = Customer
+        model = User
         fields = '__all__'
+        
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True)
