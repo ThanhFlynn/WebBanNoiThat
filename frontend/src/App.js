@@ -8,8 +8,9 @@ import './assets/css/style.css';
 import Header from './components/Header';
 // import NodeListPage from './pages/NodeListPage';
 // import NotePage from "./pages/NotePage";
-import HomePage from "./components/HomePage";
-import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/Account/LoginPage";
+import RegisterPage from "./pages/Account/RegisterPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/note/:nodeId"  element={<NotePage />} /> */}
             <Route path="/" exact element={<HomePage />} />
             <Route path="/accounts/login/" element={<LoginPage />} />
+            <Route path="/accounts/register/" element={<RegisterPage />} />
           </Routes>
         </div>
       </div>
