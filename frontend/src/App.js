@@ -4,23 +4,26 @@ import{
   Routes,
 } from "react-router-dom";
 
-// import './assets/css/App.css';
-import './assets/css/bootstrap.min.css';
 import './assets/css/style.css';
 import Header from './components/Header';
-import * as bootstrap from './assets/js/bootstrap.min.js';
 // import NodeListPage from './pages/NodeListPage';
-import NotePage from "./pages/NotePage";
+// import NotePage from "./pages/NotePage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/Account/LoginPage";
+import RegisterPage from "./pages/Account/RegisterPage";
 
 function App() {
   return (
     <HRouter>
-      <div className="container-fluid">
+      <div className="wrapper">
         <Header />
-        <div>
+        <div className="main-content">
           <Routes>
             {/* <Route path="/" exact element={<NodeListPage />} />
             <Route path="/note/:nodeId"  element={<NotePage />} /> */}
+            <Route path="/" exact element={<HomePage />} />
+            <Route path="/accounts/login/" element={<LoginPage />} />
+            <Route path="/accounts/register/" element={<RegisterPage />} />
           </Routes>
         </div>
       </div>

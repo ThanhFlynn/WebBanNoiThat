@@ -1,0 +1,34 @@
+#root {
+    .wrapper {
+        .main-content{
+            margin-top: 68px !important;
+            .loginForm{
+                font-style: italic;
+                input{
+                    width: 100% !important;
+                }
+                a{
+                    text-decoration: underline !important;
+                    &:hover{
+                        color: #368090 !important;
+                    }
+                }
+                .formFieldError {
+                    border: 1px solid #e11d48;
+                }
+
+                .formFieldErrorMessage {
+                    color: #e11d48;
+                }
+                .formSubmitBtn{
+                    padding: 5px 0;
+                    border-radius: 10px;
+                    opacity: 0.8;
+                    &:hover{
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}

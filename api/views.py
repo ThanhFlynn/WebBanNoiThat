@@ -96,9 +96,15 @@ def UserLoginView(request):
         # user = authenticate(
         #     request,
         #     username=serializer.validated_data['email'],
-        #     password=serializer.validated_data['password']
+        #     password=pbkdf2_sha256.hash(serializer.validated_data['password'])
         # )
-        user = User.objects.get(email=serializer.validated_data['email'])
+        try:
+            user = User.objects.get(email=serializer.validated_data['email'])
+        except:
+            return Response({
+                'error_message': 'Email or password is incorrect!',
+                'error_code': 400
+            }, status=status.HTTP_400_BAD_REQUEST)
         if user:
             result = pbkdf2_sha256.verify(serializer.validated_data['password'], user.password)
             if result:
