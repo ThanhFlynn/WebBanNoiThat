@@ -1,0 +1,144 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+}
+#root .wrapper {
+  width: 100%;
+}
+
+a {
+  text-decoration: none !important;
+  color: #000000 !important;
+}
+
+p {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+ul {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+ul li {
+  list-style: none;
+}
+
+#root .wrapper .header {
+  width: 100%;
+  padding: 10px 0;
+}
+#root .wrapper .header-logo img {
+  width: 30px;
+}
+#root .wrapper .header-logo p {
+  margin: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+#root .wrapper .header-form {
+  padding: 0 30px !important;
+}
+#root .wrapper .header-form input {
+  padding: 5px 20px !important;
+  border-radius: 25px;
+}
+#root .wrapper .header-action {
+  gap: 5px;
+}
+#root .wrapper .header-action li a {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+#root .wrapper .header-action li a svg {
+  margin-right: 2px;
+}
+
+#root .wrapper .main-content {
+  margin-top: 68px !important;
+}
+#root .wrapper .main-content .loginForm {
+  font-style: italic;
+}
+#root .wrapper .main-content .loginForm input {
+  width: 100% !important;
+}
+#root .wrapper .main-content .loginForm a {
+  text-decoration: underline !important;
+}
+#root .wrapper .main-content .loginForm a:hover {
+  color: #368090 !important;
+}
+#root .wrapper .main-content .loginForm .formFieldError {
+  border: 1px solid #e11d48;
+}
+#root .wrapper .main-content .loginForm .formFieldErrorMessage {
+  color: #e11d48;
+}
+#root .wrapper .main-content .loginForm .formSubmitBtn {
+  padding: 5px 0;
+  border-radius: 10px;
+  opacity: 0.8;
+}
+#root .wrapper .main-content .loginForm .formSubmitBtn:hover {
+  opacity: 1;
+}
+#root .wrapper .main-content .registerForm {
+  font-style: italic;
+}
+#root .wrapper .main-content .registerForm input {
+  width: 100% !important;
+}
+#root .wrapper .main-content .registerForm a {
+  text-decoration: underline !important;
+}
+#root .wrapper .main-content .registerForm a:hover {
+  color: #368090 !important;
+}
+#root .wrapper .main-content .registerForm .formFieldError {
+  border: 1px solid #e11d48;
+}
+#root .wrapper .main-content .registerForm .formFieldErrorMessage {
+  color: #e11d48;
+}
+#root .wrapper .main-content .registerForm .formSubmitBtn {
+  padding: 5px 0;
+  border-radius: 10px;
+  opacity: 0.8;
+}
+#root .wrapper .main-content .registerForm .formSubmitBtn:hover {
+  opacity: 1;
+}
+
+@media all and (max-width: 768px) {
+  #root .wrapper .header-action {
+    gap: 10px;
+  }
+  #root .wrapper .header-action li a svg {
+    font-size: 16px;
+  }
+  #root .wrapper .header-action li a p {
+    display: none;
+  }
+}
+@media all and (max-width: 576px) {
+  #root .wrapper .header-form {
+    display: none;
+  }
+  #root .wrapper .header-action {
+    gap: 15px;
+  }
+  #root .wrapper .header-action li a svg {
+    font-size: 18px;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
