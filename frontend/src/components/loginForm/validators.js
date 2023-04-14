@@ -10,8 +10,8 @@ export const emailValidator = email => {
 export const passwordValidator = password => {
   if (!password) {
     return "Password is required";
-  } else if (password.length < 8) {
-    return "Password must have a minimum 8 characters";
+  } else if (!new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/).test(password)) {
+    return "Password containing at least 8 characters, 1 number, 1 special character";
   }
   return "";
 };

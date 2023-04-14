@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import Note, User
-from .utils import createNote, deleteNote, getNoteDetail, getNotesList, updateNote
+from .utils import NoteController, UserController
 from .serializers import UserSerializer, UserLoginSerializer
-
-from django.contrib.auth import authenticate
+from rest_framework.decorators import permission_classes
 from passlib.hash import pbkdf2_sha256
 
 # Create your views here.
@@ -54,23 +54,23 @@ def getRoutes(request):
 def getNotes(request):
 
     if request.method == 'GET':
-        return getNotesList(request)
+        return NoteController.getNotesList(request)
 
     if request.method == 'POST':
-        return createNote(request)
+        return NoteController.createNote(request)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def getNote(request, pk):
 
     if request.method == 'GET':
-        return getNoteDetail(request, pk)
+        return NoteController.getNoteDetail(request, pk)
 
     if request.method == 'PUT':
-        return updateNote(request, pk)
+        return NoteController.updateNote(request, pk)
 
     if request.method == 'DELETE':
-        return deleteNote(request, pk)
+        return NoteController.deleteNote(request, pk)
     
 @api_view(['POST'])
 def UserRegisterView(request):
@@ -124,3 +124,16 @@ def UserLoginView(request):
         'error_messages': serializer.errors,
         'error_code': 400
     }, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes((IsAuthenticated, ))
+def getAccount(request, pk):
+
+    if request.method == 'GET':
+        return UserController.getAccountDetail(request, pk)
+    
+    if request.method == 'PUT':
+        return UserController.updateAccount(request, pk)
+
+    if request.method == 'DELETE':
+        return UserController.deleteAccount(request, pk)
