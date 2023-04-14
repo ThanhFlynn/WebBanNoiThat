@@ -11,6 +11,7 @@ import Header from './components/Header';
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/Account/LoginPage";
 import RegisterPage from "./pages/Account/RegisterPage";
+import UserPage from "./pages/Account/UserPage";
 
 function App() {
   return (
@@ -19,9 +20,8 @@ function App() {
         <Header />
         <div className="main-content">
           <Routes>
-            {/* <Route path="/" exact element={<NodeListPage />} />
-            <Route path="/note/:nodeId"  element={<NotePage />} /> */}
             <Route path="/" exact element={<HomePage />} />
+            <Route path="/accounts/" element={<UserPage />} />
             <Route path="/accounts/login/" element={<LoginPage />} />
             <Route path="/accounts/register/" element={<RegisterPage />} />
           </Routes>

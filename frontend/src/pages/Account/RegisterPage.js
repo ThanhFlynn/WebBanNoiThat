@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useLoginFormValidator } from '../../components/loginForm/hooks/useLoginFormValidator';
+import { useRegisterFormValidator } from '../../components/registerForm/hooks/useRegisterFormValidator'; 
 import clsx from 'clsx'
 import { Link, useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const RegisterPage = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -12,12 +12,16 @@ const LoginPage = () => {
   },[])
 
   const [form, setForm] = useState({
+    username:"",
     email: "",
     password: "",
+    address:"",
+    telephone:"",
   });
   
-  const { errors, validateForm, onBlurField } = useLoginFormValidator(form);
+  const { errors, validateForm, onBlurField } = useRegisterFormValidator(form);
   const [errorRegister, setErrorRegister] = useState("");
+  const [isRegister, setIsRegister] = useState(false);
 
   const onUpdateField = e => {
     let field = e.target.name;
@@ -40,49 +44,58 @@ const LoginPage = () => {
     if (!isValid) return;
     else{
       console.log(JSON.stringify(form,null,2));
-      handleLogin();
+      handleRegister();
     }
   };
 
-  let handleLogin = async () =>{
-    fetch(`/api/accounts/login/`,{
+  let handleRegister = async () =>{
+    let response = await fetch(`/api/accounts/register/`,{
       method: "POST",
       headers: {
           'Content-Type': 'application/json'
       },
       body: JSON.stringify(form),
     })
-    .then((response) => {
-      if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-      }
-      return response.json();
-    })
-    .then((actualData) => {
-      sessionStorage.setItem("info-user-token",JSON.stringify(actualData));
-      console.log(actualData);
-      window.location.reload();
-      navigate("/");
-    })
-    .catch((err) => {
-        console.log(err.message);
-        setErrorRegister("Email or password is incorrect!");
-    });
+
+    let data = await response.json()
+
+    if(response.status === 201){
+      setIsRegister(true);
+    }else if(response.status === 400){
+      setErrorRegister(data.error_message);
+    }
   }
 
   return (
     <div class="container" style={{marginTop:40+"px"}}> 
         <div class="row">
           <div class="col-8 offset-2 col-md-6 offset-md-3 text-center">
-            <form className="loginForm mt-5" onSubmit={onSubmitForm}>
+            {isRegister === false ? (
+            <form className="registerForm mt-1" onSubmit={onSubmitForm}>
                 <h1>Sign Up</h1>
-                {errorRegister ? (
+                {errorRegister !== null ? (
                   <p className="formFieldErrorMessage">{errorRegister}</p>
                 ) : null}
                 <div className="formGroup text-start">
-                    <label htmlFor='email' className="formLabel mt-3">Email</label>
+                    <label htmlFor='username' className="formLabel mt-3">Username :</label>
+                    <input
+                    className={clsx(
+                        "form-control form-control-dark",
+                        errors.username.dirty && errors.username.error && "formFieldError"
+                    )}
+                    type="text"
+                    aria-label="Username field"
+                    name="username"
+                    id='username'
+                    onChange={onUpdateField}
+                    onBlur={onBlurField}
+                    />
+                    {errors.username.dirty && errors.username.error ? (
+                    <p className="formFieldErrorMessage">{errors.username.message}</p>
+                    ) : null}
+                </div>
+                <div className="formGroup text-start">
+                    <label htmlFor='email' className="formLabel mt-3">Email :</label>
                     <input
                     className={clsx(
                         "form-control form-control-dark",
@@ -100,7 +113,7 @@ const LoginPage = () => {
                     ) : null}
                 </div>
                 <div className="formGroup text-start">
-                    <label className="formLabel mt-3">Password</label>
+                    <label htmlFor='password' className="formLabel mt-3">Password :</label>
                     <input
                       className={clsx(
                           "form-control form-control-dark",
@@ -119,14 +132,60 @@ const LoginPage = () => {
                     </p>
                     ) : null}
                 </div>
-                <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Sign In"/>
+                <div className="formGroup text-start">
+                    <label htmlFor='address' className="formLabel mt-3">Address :</label>
+                    <input
+                      className={clsx(
+                          "form-control form-control-dark",
+                          errors.address.dirty && errors.address.error && "formFieldError"
+                      )}
+                      type="text"
+                      aria-label="Address field"
+                      name="address"
+                      id='address'
+                      onChange={onUpdateField}
+                      onBlur={onBlurField}
+                    />
+                    {errors.address.dirty && errors.address.error ? (
+                    <p className="formFieldErrorMessage">
+                      {errors.address.message}
+                    </p>
+                    ) : null}
+                </div>
+                <div className="formGroup text-start">
+                    <label htmlFor='telephone' className="formLabel mt-3">Telephone :</label>
+                    <input
+                      className={clsx(
+                          "form-control form-control-dark",
+                          errors.telephone.dirty && errors.telephone.error && "formFieldError"
+                      )}
+                      type="text"
+                      aria-label="Telephone field"
+                      name="telephone"
+                      id='telephone'
+                      onChange={onUpdateField}
+                      onBlur={onBlurField}
+                    />
+                    {errors.telephone.dirty && errors.telephone.error ? (
+                    <p className="formFieldErrorMessage">
+                      {errors.telephone.message}
+                    </p>
+                    ) : null}
+                </div>
+                <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Create"/>
                 <p>Already have an account?</p>
                 <Link to="/accounts/login/">SIGN IN</Link>
             </form>
+            ) : (
+              <div className='fst-italic' style={{marginTop:100+"px"}}>
+                <h1>Register successful!</h1>
+                <Link to="/accounts/login/" className='text-decoration-underline'>SIGN IN</Link>
+              </div>
+            )}
           </div>
         </div>
     </div>
   );
 }
 
-export default LoginPage
+export default RegisterPage
