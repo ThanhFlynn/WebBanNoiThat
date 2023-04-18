@@ -1,0 +1,105 @@
+#root {
+    .wrapper {
+        .navbar{
+            z-index: 1;
+            width: 100%;
+            position: fixed;
+            top: 69px;
+            left: 0px;
+            padding: 10px 60px !important;
+            border-bottom: 1px solid rgba($color: #000000, $alpha: 0.2);
+            li{
+                a{
+                    font-size: 1.3vw;
+                    text-transform: uppercase;
+                    font-weight: 700;
+                }
+            }
+        }
+        .main-content {
+            margin-top: 117px !important;
+
+            .loginForm {
+                font-style: italic;
+
+                input {
+                    width: 100% !important;
+                }
+
+                a {
+                    text-decoration: underline !important;
+
+                    &:hover {
+                        color: #368090 !important;
+                    }
+                }
+
+                .formFieldError {
+                    border: 1px solid #e11d48;
+                }
+
+                .formFieldErrorMessage {
+                    color: #e11d48;
+                }
+
+                .formSubmitBtn {
+                    padding: 5px 0;
+                    border-radius: 10px;
+                    opacity: 0.8;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .registerForm {
+                font-style: italic;
+
+                input {
+                    width: 100% !important;
+                }
+
+                a {
+                    text-decoration: underline !important;
+
+                    &:hover {
+                        color: #368090 !important;
+                    }
+                }
+
+                .formFieldError {
+                    border: 1px solid #e11d48;
+                }
+
+                .formFieldErrorMessage {
+                    color: #e11d48;
+                }
+
+                .formSubmitBtn {
+                    padding: 5px 0;
+                    border-radius: 10px;
+                    opacity: 0.8;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .carousel{
+                &-inner{
+                    .carousel-item{
+                        width: 100%;
+                        height: 578px;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

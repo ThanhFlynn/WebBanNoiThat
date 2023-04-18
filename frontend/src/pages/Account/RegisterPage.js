@@ -67,17 +67,17 @@ const RegisterPage = () => {
   }
 
   return (
-    <div class="container" style={{marginTop:40+"px"}}> 
+    <div class="container" style={{marginTop:120+"px"}}> 
         <div class="row">
           <div class="col-8 offset-2 col-md-6 offset-md-3 text-center">
             {isRegister === false ? (
-            <form className="registerForm mt-1" onSubmit={onSubmitForm}>
-                <h1>Sign Up</h1>
+            <form className="registerForm mt-1 mb-4" onSubmit={onSubmitForm}>
+                <h1>Đăng ký</h1>
                 {errorRegister !== null ? (
                   <p className="formFieldErrorMessage">{errorRegister}</p>
                 ) : null}
                 <div className="formGroup text-start">
-                    <label htmlFor='username' className="formLabel mt-3">Username :</label>
+                    <label htmlFor='username' className="formLabel mt-3">Tên đăng nhập :</label>
                     <input
                     className={clsx(
                         "form-control form-control-dark",
@@ -133,7 +133,7 @@ const RegisterPage = () => {
                     ) : null}
                 </div>
                 <div className="formGroup text-start">
-                    <label htmlFor='address' className="formLabel mt-3">Address :</label>
+                    <label htmlFor='address' className="formLabel mt-3">Địa chỉ :</label>
                     <input
                       className={clsx(
                           "form-control form-control-dark",
@@ -153,7 +153,7 @@ const RegisterPage = () => {
                     ) : null}
                 </div>
                 <div className="formGroup text-start">
-                    <label htmlFor='telephone' className="formLabel mt-3">Telephone :</label>
+                    <label htmlFor='telephone' className="formLabel mt-3">Số điện thoại :</label>
                     <input
                       className={clsx(
                           "form-control form-control-dark",
@@ -172,7 +172,7 @@ const RegisterPage = () => {
                     </p>
                     ) : null}
                 </div>
-                <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Create"/>
+                <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Tạo"/>
                 <p>Already have an account?</p>
                 <Link to="/accounts/login/">SIGN IN</Link>
             </form>

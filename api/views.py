@@ -1,14 +1,12 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Note, User
+from .models import User
 from .utils import NoteController, UserController
 from .serializers import UserSerializer, UserLoginSerializer
-from rest_framework.decorators import permission_classes
-from passlib.hash import pbkdf2_sha256
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your views here.
 
@@ -76,7 +74,7 @@ def getNote(request, pk):
 def UserRegisterView(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.validated_data['password'] = pbkdf2_sha256.hash(serializer.validated_data['password'])
+        serializer.validated_data['password'] = make_password(serializer.validated_data['password'])
         user = serializer.save()
         
         return Response({
@@ -101,7 +99,7 @@ def UserLoginView(request):
         try:
             user = User.objects.get(email=serializer.validated_data['email'])
             if user:
-                result = pbkdf2_sha256.verify(serializer.validated_data['password'], user.password)
+                result = check_password(serializer.validated_data['password'], user.password)
                 if result:
                     refresh = TokenObtainPairSerializer.get_token(user)
                     data = {
@@ -121,7 +119,6 @@ def UserLoginView(request):
     }, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes((IsAuthenticated, ))
 def getAccount(request):
 
     if request.method == 'GET':

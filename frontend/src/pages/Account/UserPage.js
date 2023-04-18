@@ -1,37 +1,42 @@
 import React, {useState, useEffect} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const UserPage = () => {
     let navigate = useNavigate();
     let [authTokens, setAuthTokens] = useState(()=> sessionStorage.getItem('info-user-token') ? JSON.parse(sessionStorage.getItem('info-user-token')) : null);
-    let [user, setUser] = useState([])
+    let [user, setUser] = useState([]);
+    let { accountAction }= useParams();
+
+    let logOut = e =>{
+        sessionStorage.removeItem('info-user-token');
+        window.location.reload();
+    }
 
     useEffect(() => {
         if(authTokens == null){
             navigate('/accounts/login');
         }
         getAccount();    
+        console.log(accountAction);
     },[])
 
     let getAccount = async() =>{
-        let response = await fetch('/api/accounts/detail', {
+        let response = await fetch('/api/accounts/detail/', {
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
-                'Authorization':'Bearer ' + String(authTokens.access_token)
+                'Authentication':'Bearer ' + String(authTokens.access_token)
             }
         })
         let data = await response.json();
-        console.log(data);
+
+        if(response.status === 401){
+            logOut();
+        }
 
         if(response.status === 200){
             setUser(data);
         }
-    }
-
-    let logOut = e =>{
-        sessionStorage.removeItem('info-user-token');
-        navigate("/");
     }
 
     return (
@@ -40,12 +45,15 @@ const UserPage = () => {
                 <div className='col-3 bg-primary p-5'>
                     <ul>
                         <li><p>{user.username}</p></li>
-                        <li></li>
-                        <li></li>
-                        <li><button onClick={logOut}><a>Log Out</a></button></li>
+                        <li><Link>Lịch sử mua hàng</Link></li>
+                        <li><a href='/#/accounts/update'>Cập nhật tài khoản</a></li>
+                        <li><a href='/#/accounts/wishlist'>Danh sách yêu thích</a></li>
+                        <li><Link onClick={logOut}>Đăng xuất</Link></li>
                     </ul>
                 </div>
-                <div className='col-9 bg-secondary p-5'></div>
+                <div className='col-9 bg-secondary p-5'>
+
+                </div>
             </div>
         </div>
     )
