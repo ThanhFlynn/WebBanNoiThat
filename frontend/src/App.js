@@ -8,7 +8,7 @@ import './assets/css/style.css';
 import Header from './components/Header';
 // import NodeListPage from './pages/NodeListPage';
 // import NotePage from "./pages/NotePage";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/Account/LoginPage";
 import RegisterPage from "./pages/Account/RegisterPage";
 import UserPage from "./pages/Account/UserPage";

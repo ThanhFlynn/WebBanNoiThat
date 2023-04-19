@@ -13,8 +13,8 @@
                     }
                 }
             }
-            .navbar{
-                padding: 10px 40px !important;
+            .nav-menu{
+                display: none;
             }
             .main-content{
                 margin-top: 69px !important;
@@ -30,13 +30,13 @@
     }
 }
 
+
 @media all and (max-width: 768px) {
     #root {
         .wrapper {
             .header {
                 &-action {
                     gap: 10px;
-
                     li {
                         a {
                             svg {
@@ -49,9 +49,6 @@
                         }
                     }
                 }
-            }
-            .navbar{
-                display: none;
             }
             .main-content {
                 margin-top: 70px !important;
