@@ -39,7 +39,6 @@ const LoginPage = () => {
     let { isValid } = validateForm({ form, errors, forceTouchErrors: true });
     if (!isValid) return;
     else{
-      console.log(JSON.stringify(form,null,2));
       handleLogin();
     }
   };
@@ -62,12 +61,10 @@ const LoginPage = () => {
     })
     .then((actualData) => {
       sessionStorage.setItem("info-user-token",JSON.stringify(actualData));
-      console.log(actualData);
       window.location.reload();
       navigate("/");
     })
     .catch((err) => {
-        console.log(err.message);
         setErrorLogin("Email or password is incorrect!");
     });
   }
@@ -77,9 +74,9 @@ const LoginPage = () => {
         <div class="row">
           <div class="col-8 offset-2 col-md-6 offset-md-3 text-center">
             <form className="loginForm mt-5" onSubmit={onSubmitForm}>
-                <h1>Sign In</h1>
-                <p>Don't have an account yet?</p>
-                <Link to="/accounts/register/">SIGN UP</Link>
+                <h1>Đăng nhập</h1>
+                <p>Chưa có tài khoản?</p>
+                <Link to="/accounts/register/">Đăng ký</Link>
                 {errorLogin ? (
                   <p className="formFieldErrorMessage">{errorLogin}</p>
                 ) : null}
@@ -121,8 +118,8 @@ const LoginPage = () => {
                     </p>
                     ) : null}
                 </div>
-                <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Sign In"/>
-                <Link to="/accounts/forgot/">FORGOT PASSWORD</Link>
+                <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Đăng nhập"/>
+                <Link to="/accounts/forgot/">Quên mật khẩu</Link>
             </form>
           </div>
         </div>

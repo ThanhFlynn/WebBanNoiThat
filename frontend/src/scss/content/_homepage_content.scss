@@ -1,0 +1,166 @@
+#root {
+    .wrapper {
+        .nav-menu{
+            position: fixed;
+            top: 69px;
+            left: 0px;
+            display: flex;
+            width: 100%;
+            height: 50px;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba($color: #000000, $alpha: 0.2);
+            z-index: 2;
+            background-color: #ffffff;
+            li{
+                padding: 12px 16px;
+                height: max-content;
+                .nav-title{
+                    text-transform: uppercase;
+                    font-size: 1.3vw;
+                    font-weight: 700;
+                }
+                &:hover{
+                    background-color: #21409A;
+                    
+                    .nav-title {
+                        color: #ffffff !important;
+                    }
+                }
+            }
+            .room{
+                position: relative;
+                //display: inline-block;
+                .nav-dropdown{
+                    width: 247px;
+                    margin-left: -16px;
+                    margin-top: 12px;
+                    position: absolute;
+                    background-color: #ffffff;
+                    display: none;
+                    -webkit-box-shadow: 3px 3px 3px rgba(255, 255, 255, 0.6);
+                    box-shadow: 3px 3px 3px rgba(255, 255, 255, 0.6);
+                    transition: width 2s linear 2s;
+                    a{
+                        display: block;
+                        padding: 12px 14px;
+                        background-color: rgba($color: #000000, $alpha: 0.2);
+                        &:hover{
+                            color: #21409A !important;
+                            text-decoration: underline !important;
+                        }
+                        border-left: 1px solid #ffffff;
+                        border-right: 1px solid #ffffff;
+                        border-bottom: 1px solid #ffffff;
+                    }
+                }
+                &:hover{
+                    .nav-dropdown{
+                        display: block;
+                        z-index: 3;
+                    }
+                }
+            }
+        }
+
+        .main-content {
+            margin-top: 119px !important;
+
+            .loginForm {
+                font-style: italic;
+
+                input {
+                    width: 100% !important;
+                }
+
+                a {
+                    text-decoration: underline !important;
+
+                    &:hover {
+                        color: #368090 !important;
+                    }
+                }
+
+                .formFieldError {
+                    border: 1px solid #e11d48;
+                }
+
+                .formFieldErrorMessage {
+                    color: #e11d48;
+                }
+
+                .formSubmitBtn {
+                    padding: 5px 0;
+                    border-radius: 10px;
+                    opacity: 0.8;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .registerForm {
+                font-style: italic;
+
+                input {
+                    width: 100% !important;
+                }
+
+                a {
+                    text-decoration: underline !important;
+
+                    &:hover {
+                        color: #368090 !important;
+                    }
+                }
+
+                .formFieldError {
+                    border: 1px solid #e11d48;
+                }
+
+                .formFieldErrorMessage {
+                    color: #e11d48;
+                }
+
+                .formSubmitBtn {
+                    padding: 5px 0;
+                    border-radius: 10px;
+                    opacity: 0.8;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .carousel{
+                &-inner{
+                    .carousel-item{
+                        width: 100%;
+                        height: 578px;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                }
+            }
+            .topCategories{
+                margin-top: 30px;
+                .slick-slider{
+                    .slick-arrow{
+                        &::before{
+                            color: #000000;
+                        }
+                    }
+                    .slick-prev.slick-disabled:before,
+                    .slick-next.slick-disabled:before{
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+    }
+}

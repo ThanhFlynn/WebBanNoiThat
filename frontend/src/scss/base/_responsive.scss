@@ -1,0 +1,92 @@
+@media all and (max-width: 1024px) {
+    #root {
+        .wrapper {
+            .header {
+                &-action {
+                    gap: 2px;
+
+                    li {
+                        a {
+                            font-size: 11px;
+                            letter-spacing: 1px;
+                        }
+                    }
+                }
+            }
+            .nav-menu{
+                display: none;
+            }
+            .main-content{
+                margin-top: 69px !important;
+                .carousel {
+                    &-inner {
+                        .carousel-item {
+                            height: 400px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media all and (max-width: 768px) {
+    #root {
+        .wrapper {
+            .header {
+                &-action {
+                    gap: 10px;
+                    li {
+                        a {
+                            svg {
+                                font-size: 16px;
+                            }
+
+                            p {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+            .main-content {
+                margin-top: 70px !important;
+
+                .carousel {
+                    &-inner {
+                        .carousel-item {
+                            height: 300px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media all and (max-width: 576px) {
+    #root {
+        .wrapper {
+            .header {
+                &-form {
+                    display: none;
+                }
+
+                &-action {
+                    gap: 15px;
+
+                    li {
+                        a {
+                            svg {
+                                font-size: 18px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media all and (max-width: 375px) {}

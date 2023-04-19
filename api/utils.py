@@ -45,16 +45,19 @@ class NoteController:
 class UserController:
 
     def getAccountDetail(request):
-
-        access_token = request.headers["Authorization"][7:]
+        access_token = request.headers["Authentication"][7:]
         payload = jwt.decode(jwt=access_token, key=settings.SECRET_KEY, algorithms=['HS256'])
         user_id = payload["user_id"]
-        print(payload)
         try:
             user = User.objects.get(id=user_id)
             serializer = UserSerializer(user, many=False)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
+        except jwt.ExpiredSignatureError:
+            return Response({
+                'error_messages': serializer.errors,
+                'error_code': 401
+            }, status=status.HTTP_401_UNAUTHORIZED)
         except:
             return Response({
                 'error_messages': serializer.errors,

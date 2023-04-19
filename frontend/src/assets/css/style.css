@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -8,6 +10,9 @@
   width: 100%;
 }
 #root .wrapper {
+  width: 100%;
+}
+#root .wrapper .main-content {
   width: 100%;
 }
 
@@ -32,6 +37,8 @@ ul li {
 #root .wrapper .header {
   width: 100%;
   padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  z-index: 2;
 }
 #root .wrapper .header-logo img {
   width: 30px;
@@ -61,9 +68,70 @@ ul li {
 #root .wrapper .header-action li a svg {
   margin-right: 2px;
 }
+#root .wrapper .header-action li a p {
+  text-transform: uppercase;
+}
 
+#root .wrapper .nav-menu {
+  position: fixed;
+  top: 69px;
+  left: 0px;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  background-color: #ffffff;
+}
+#root .wrapper .nav-menu li {
+  padding: 12px 16px;
+  height: max-content;
+}
+#root .wrapper .nav-menu li .nav-title {
+  text-transform: uppercase;
+  font-size: 1.3vw;
+  font-weight: 700;
+}
+#root .wrapper .nav-menu li:hover {
+  background-color: #21409A;
+}
+#root .wrapper .nav-menu li:hover .nav-title {
+  color: #ffffff !important;
+}
+#root .wrapper .nav-menu .room {
+  position: relative;
+}
+#root .wrapper .nav-menu .room .nav-dropdown {
+  width: 247px;
+  margin-left: -16px;
+  margin-top: 12px;
+  position: absolute;
+  background-color: #ffffff;
+  display: none;
+  -webkit-box-shadow: 3px 3px 3px rgba(255, 255, 255, 0.6);
+  box-shadow: 3px 3px 3px rgba(255, 255, 255, 0.6);
+  transition: width 2s linear 2s;
+}
+#root .wrapper .nav-menu .room .nav-dropdown a {
+  display: block;
+  padding: 12px 14px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+}
+#root .wrapper .nav-menu .room .nav-dropdown a:hover {
+  color: #21409A !important;
+  text-decoration: underline !important;
+}
+#root .wrapper .nav-menu .room:hover .nav-dropdown {
+  display: block;
+  z-index: 3;
+}
 #root .wrapper .main-content {
-  margin-top: 68px !important;
+  margin-top: 119px !important;
 }
 #root .wrapper .main-content .loginForm {
   font-style: italic;
@@ -117,7 +185,44 @@ ul li {
 #root .wrapper .main-content .registerForm .formSubmitBtn:hover {
   opacity: 1;
 }
+#root .wrapper .main-content .carousel-inner .carousel-item {
+  width: 100%;
+  height: 578px;
+}
+#root .wrapper .main-content .carousel-inner .carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#root .wrapper .main-content .topCategories {
+  margin-top: 30px;
+}
+#root .wrapper .main-content .topCategories .slick-slider .slick-arrow::before {
+  color: #000000;
+}
+#root .wrapper .main-content .topCategories .slick-slider .slick-prev.slick-disabled:before,
+#root .wrapper .main-content .topCategories .slick-slider .slick-next.slick-disabled:before {
+  opacity: 0;
+}
 
+@media all and (max-width: 1024px) {
+  #root .wrapper .header-action {
+    gap: 2px;
+  }
+  #root .wrapper .header-action li a {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  #root .wrapper .nav-menu {
+    display: none;
+  }
+  #root .wrapper .main-content {
+    margin-top: 69px !important;
+  }
+  #root .wrapper .main-content .carousel-inner .carousel-item {
+    height: 400px;
+  }
+}
 @media all and (max-width: 768px) {
   #root .wrapper .header-action {
     gap: 10px;
@@ -127,6 +232,12 @@ ul li {
   }
   #root .wrapper .header-action li a p {
     display: none;
+  }
+  #root .wrapper .main-content {
+    margin-top: 70px !important;
+  }
+  #root .wrapper .main-content .carousel-inner .carousel-item {
+    height: 300px;
   }
 }
 @media all and (max-width: 576px) {

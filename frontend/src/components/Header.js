@@ -22,36 +22,39 @@ const Header = () => {
             </a>
           </div>
           <form action='' className='header-form flex-grow-1 postion-relative'>
-            <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search"></input>
+            <input type="search" class="form-control form-control-dark" placeholder="Tìm kiếm..." aria-label="Search"></input>
           </form>
           <ul className='header-action d-flex align-items-center justify-content-center'>
             <li>
               <Link to="#" className='d-flex align-items-center justify-content-center'>
                 <i class="fa-regular fa-heart"></i>
-                <p>WISHLIST</p>
+                <p>yêu thích</p>
               </Link>
             </li>
             <li>
               {isLogin === false ? (
                 <Link to="/accounts/login/" className='d-flex align-items-center justify-content-center'>
                   <i class="fa-regular fa-circle-user"></i>
-                  <p>SIGN IN</p>
+                  <p>đăng nhập</p>
                 </Link>
                 ) : (
-                <Link to="/accounts" className='d-flex align-items-center justify-content-center'>
+                <Link to="/accounts/" className='d-flex align-items-center justify-content-center'>
                   <i class="fa-regular fa-circle-user"></i>
-                  <p>MY ACCOUNT</p>
+                  <p>tài khoản</p>
                 </Link>
               )}
             </li>
             <li>
               <Link to="#" className='d-flex align-items-center justify-content-center'>
                 <i class="fa-solid fa-cart-shopping"></i>
-                <p>MY CART</p>
+                <p>giỏ hàng</p>
               </Link>
             </li>
           </ul>
         </div>
+        {/* <form action='' className='header-form-2 flex-grow-1 postion-relative'>
+            <input type="search" class="form-control form-control-dark" placeholder="Tìm kiếm..." aria-label="Search"></input>
+          </form> */}
       </div>
     </div>
   )

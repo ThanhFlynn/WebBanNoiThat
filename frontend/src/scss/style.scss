@@ -1,0 +1,16 @@
+// Source
+@import 'source/_variable.scss';
+@import 'source/_mixin.scss';
+@import 'source/_typography.scss';
+
+//Header - Footer
+@import './base/_default.scss';
+@import './base/_header.scss';
+
+//Content
+@import './content/_homepage_content.scss';
+@import './content/_slider.scss';
+@import './base/_footer.scss';
+
+//Responsive
+@import './base/_responsive.scss';
