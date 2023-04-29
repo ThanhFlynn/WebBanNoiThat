@@ -4,8 +4,7 @@ import {
   usernameValidator,
   emailValidator,
   passwordValidator,
-  addressValidator,
-  telephoneValidator
+  confirmPasswordValidator
 } from "../validators.js";
 
 const touchErrors = errors => {
@@ -35,16 +34,21 @@ export const useRegisterFormValidator = form => {
       error: false,
       message: "",
     },
-    address: {
+    confirmpassword: {
       dirty: false,
       error: false,
       message: "",
     },
-    telephone: {
-      dirty: false,
-      error: false,
-      message: "",
-    },
+    // address: {
+    //   dirty: false,
+    //   error: false,
+    //   message: "",
+    // },
+    // telephone: {
+    //   dirty: false,
+    //   error: false,
+    //   message: "",
+    // },
   });
 
   const validateForm = ({ form, field, errors, forceTouchErrors = false }) => {
@@ -58,7 +62,7 @@ export const useRegisterFormValidator = form => {
       nextErrors = touchErrors(errors);
     }
 
-    const { username, email, password, address, telephone } = form;
+    const { username, email, password, confirmpassword} = form;
 
     if (nextErrors.username.dirty && (field ? field === "username" : true)) {
       let usernameMessage = usernameValidator(username, form);
@@ -81,19 +85,26 @@ export const useRegisterFormValidator = form => {
       if (!!passwordMessage) isValid = false;
     }
 
-    if (nextErrors.address.dirty && (field ? field === "address" : true)) {
-      let addressMessage = addressValidator(address, form);
-      nextErrors.address.error = !!addressMessage;
-      nextErrors.address.message = addressMessage;
-      if (!!addressMessage) isValid = false;
+    if (nextErrors.confirmpassword.dirty && (field ? field === "confirmpassword" : true)) {
+      let confirmpasswordMessage = confirmPasswordValidator(confirmpassword, form);
+      nextErrors.confirmpassword.error = !!confirmpasswordMessage;
+      nextErrors.confirmpassword.message = confirmpasswordMessage;
+      if (!!confirmpasswordMessage) isValid = false;
     }
 
-    if (nextErrors.telephone.dirty && (field ? field === "telephone" : true)) {
-      let telephoneMessage = telephoneValidator(telephone, form);
-      nextErrors.telephone.error = !!telephoneMessage;
-      nextErrors.telephone.message = telephoneMessage;
-      if (!!telephoneMessage) isValid = false;
-    }
+    // if (nextErrors.address.dirty && (field ? field === "address" : true)) {
+    //   let addressMessage = addressValidator(address, form);
+    //   nextErrors.address.error = !!addressMessage;
+    //   nextErrors.address.message = addressMessage;
+    //   if (!!addressMessage) isValid = false;
+    // }
+
+    // if (nextErrors.telephone.dirty && (field ? field === "telephone" : true)) {
+    //   let telephoneMessage = telephoneValidator(telephone, form);
+    //   nextErrors.telephone.error = !!telephoneMessage;
+    //   nextErrors.telephone.message = telephoneMessage;
+    //   if (!!telephoneMessage) isValid = false;
+    // }
 
     setErrors(nextErrors);
 

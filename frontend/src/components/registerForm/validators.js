@@ -23,18 +23,29 @@ export const passwordValidator = password => {
   return "";
 };
 
-export const addressValidator = address => {
-  if (!address) {
-    return "Address is required";
+export const confirmPasswordValidator = (confirmPassword, form) => {
+  if (!confirmPassword) {
+    return "Confirm password is required";
+  } else if (!new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/).test(confirmPassword)) {
+    return "Password containing at least 8 characters, 1 number, 1 upper and 1 lowercase";
+  } else if (confirmPassword !== form.password) {
+    return "Passwords do not match";
   }
   return "";
 };
 
-export const telephoneValidator = telephone => {
-  if (!telephone) {
-    return "Telephone is required";
-  } else if (!new RegExp(/((09|03|07|08|05)+([0-9]{8,9})\b)/g).test(telephone)) {
-    return "Your phone number is not in the correct format!";
-  }
-  return "";
-};
+// export const addressValidator = address => {
+//   if (!address) {
+//     return "Address is required";
+//   }
+//   return "";
+// };
+
+// export const telephoneValidator = telephone => {
+//   if (!telephone) {
+//     return "Telephone is required";
+//   } else if (!new RegExp(/((09|03|07|08|05)+([0-9]{8,9})\b)/g).test(telephone)) {
+//     return "Your phone number is not in the correct format!";
+//   }
+//   return "";
+// };

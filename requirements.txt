@@ -6,3 +6,5 @@ pip==23.0.1
 pytz==2023.3
 djangorestframework_simplejwt==5.2.2
 passlib==1.7.4
+Pillow==9.5.0
+django_utils_six==2.0

@@ -7,5 +7,6 @@ urlpatterns = [
     path('notes/<str:pk>',views.getNote, name="note"),
     path('accounts/detail/',views.getAccount, name="account"),
     path('accounts/register/',views.UserRegisterView, name="register"),
-    path('accounts/login/',views.UserLoginView, name="login")
+    path('accounts/login/',views.UserLoginView, name="login"),
+    path('accounts/activate',views.activate, name="activate")
 ]

@@ -15,8 +15,7 @@ const RegisterPage = () => {
     username:"",
     email: "",
     password: "",
-    address:"",
-    telephone:"",
+    confirmpassword: "",
   });
   
   const { errors, validateForm, onBlurField } = useRegisterFormValidator(form);
@@ -43,26 +42,30 @@ const RegisterPage = () => {
     let { isValid } = validateForm({ form, errors, forceTouchErrors: true });
     if (!isValid) return;
     else{
-      console.log(JSON.stringify(form,null,2));
+      // console.log(JSON.stringify(form,null,2));
       handleRegister();
     }
   };
 
   let handleRegister = async () =>{
-    let response = await fetch(`/api/accounts/register/`,{
-      method: "POST",
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(form),
-    })
+    try {
+      let response = await fetch(`/api/accounts/register/`,{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form),
+      });
 
-    let data = await response.json()
+      let data = await response.json();
 
-    if(response.status === 201){
-      setIsRegister(true);
-    }else if(response.status === 400){
-      setErrorRegister(data.error_message);
+      if(response.status === 201){
+        setIsRegister(true);
+      }else if(response.status === 400){
+        setErrorRegister(data.error_message);
+      }
+    } catch (error) {
+      setErrorRegister("Lỗi kết nối! Vui lòng thử lại sau")
     }
   }
 
@@ -133,6 +136,26 @@ const RegisterPage = () => {
                     ) : null}
                 </div>
                 <div className="formGroup text-start">
+                    <label htmlFor='confirmpassword' className="formLabel mt-3">Confirm Password :</label>
+                    <input
+                      className={clsx(
+                          "form-control form-control-dark",
+                          errors.confirmpassword.dirty && errors.confirmpassword.error && "formFieldError"
+                      )}
+                      type="password"
+                      aria-label="confirmPassword field"
+                      name="confirmpassword"
+                      id='confirmpassword'
+                      onChange={onUpdateField}
+                      onBlur={onBlurField}
+                    />
+                    {errors.confirmpassword.dirty && errors.confirmpassword.error ? (
+                    <p className="formFieldErrorMessage">
+                      {errors.confirmpassword.message}
+                    </p>
+                    ) : null}
+                </div>
+                {/* <div className="formGroup text-start">
                     <label htmlFor='address' className="formLabel mt-3">Địa chỉ :</label>
                     <input
                       className={clsx(
@@ -171,7 +194,7 @@ const RegisterPage = () => {
                       {errors.telephone.message}
                     </p>
                     ) : null}
-                </div>
+                </div> */}
                 <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Tạo"/>
                 <p>Already have an account?</p>
                 <Link to="/accounts/login/">SIGN IN</Link>
