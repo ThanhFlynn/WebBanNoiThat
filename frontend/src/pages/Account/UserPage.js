@@ -1,10 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import UpdateAccount from './AccountAction/UpdateAccount';
+import ChangePassword from './AccountAction/ChangePassword';
+
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
+
 
 const UserPage = () => {
     let navigate = useNavigate();
     let [authTokens, setAuthTokens] = useState(()=> sessionStorage.getItem('info-user-token') ? JSON.parse(sessionStorage.getItem('info-user-token')) : null);
-    let [user, setUser] = useState([]);
+    let [user, setUser] = useState({});
     let { accountAction }= useParams();
 
     let logOut = e =>{
@@ -12,12 +19,18 @@ const UserPage = () => {
         window.location.reload();
     }
 
+    let handleClick = async event => {
+        await delay(1);
+        window.location.reload();
+    };
+
     useEffect(() => {
         if(authTokens == null){
-            navigate('/accounts/login');
+            navigate('/');
         }
         getAccount();    
-        console.log(accountAction);
+        if(accountAction === undefined)
+            accountAction = null;
     },[])
 
     let getAccount = async() =>{
@@ -28,11 +41,11 @@ const UserPage = () => {
                 'Authentication':'Bearer ' + String(authTokens.access_token)
             }
         })
-        let data = await response.json();
-
-        if(response.status === 401){
+        if(response.status === 500){
             logOut();
         }
+        
+        let data = await response.json();
 
         if(response.status === 200){
             setUser(data);
@@ -46,13 +59,28 @@ const UserPage = () => {
                     <ul>
                         <li><p>{user.username}</p></li>
                         <li><Link>Lịch sử mua hàng</Link></li>
-                        <li><a href='/#/accounts/update'>Cập nhật tài khoản</a></li>
-                        <li><a href='/#/accounts/wishlist'>Danh sách yêu thích</a></li>
+                        <li><Link to='/accounts/update' onClick={handleClick}>Cập nhật tài khoản</Link></li>
+                        <li><Link to='/accounts/changepassword' onClick={handleClick}>Thay đổi mật khẩu</Link></li>
+                        <li><Link to='/accounts/wishlist' onClick={handleClick}>Danh sách yêu thích</Link></li>
                         <li><Link onClick={logOut}>Đăng xuất</Link></li>
                     </ul>
                 </div>
                 <div className='col-9 bg-secondary p-5'>
-
+                    {accountAction == null ? (
+                        <p>Hello</p>
+                    ) : (
+                        accountAction == "update" ? (
+                            <UpdateAccount user={user} authTokens={authTokens}/>
+                        ):(
+                            accountAction == "wishlist" ? (
+                                <p>Wishlist</p>
+                            ):(
+                                accountAction == "changepassword" ? (
+                                    <ChangePassword authTokens={authTokens}/>
+                                ):null
+                            )
+                        )
+                    )}
                 </div>
             </div>
         </div>

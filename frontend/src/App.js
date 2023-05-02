@@ -13,6 +13,7 @@ import LoginPage from "./pages/Account/LoginPage";
 import RegisterPage from "./pages/Account/RegisterPage";
 import UserPage from "./pages/Account/UserPage";
 import NavBar from "./components/NavBar";
+import RecoverPasswordPage from "./pages/Account/RecoverPasswordPage";
 
 function App() {
   return (
@@ -23,10 +24,13 @@ function App() {
         <div className="main-content">
           <Routes>
             <Route path="/" exact element={<HomePage />} />
-            <Route path="/accounts/" element={<UserPage />} />
-            <Route path="/accounts/:accountAction/" element={<UserPage />} />
-            <Route path="/accounts/login/" element={<LoginPage />} />
-            <Route path="/accounts/register/" element={<RegisterPage />} />
+            <Route path="/accounts">
+              <Route index element={<UserPage />} />
+              <Route path=":accountAction" element={<UserPage />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="recoverPassword/:sid" element={<RecoverPasswordPage />} />
+            </Route>
           </Routes>
         </div>
       </div>

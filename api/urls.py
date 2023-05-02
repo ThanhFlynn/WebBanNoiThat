@@ -8,5 +8,8 @@ urlpatterns = [
     path('accounts/detail/',views.getAccount, name="account"),
     path('accounts/register/',views.UserRegisterView, name="register"),
     path('accounts/login/',views.UserLoginView, name="login"),
-    path('accounts/activate',views.activate, name="activate")
+    path('accounts/activate',views.activate, name="activate"),
+    path('accounts/recoverPassword/',views.recoverPassword, name="recoverPassword"),
+    path('accounts/doRecoverPassword',views.doRecoverPassword, name="doRecoverPassword"),
+    path('accounts/changePW/',views.changePW, name="changePW"),
 ]

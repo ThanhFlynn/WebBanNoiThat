@@ -13,7 +13,7 @@ const NotePage = () => {
     },[])
 
     let getNote = async () =>{
-        if (nodeId === 'new') return
+        if (nodeId === 'new') return;
 
         let response = await fetch(`/api/notes/${nodeId}`);
         let data = await response.json();

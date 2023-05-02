@@ -91,7 +91,7 @@ ul li {
 }
 #root .wrapper .nav-menu li .nav-title {
   text-transform: uppercase;
-  font-size: 1.3vw;
+  font-size: 15px;
   font-weight: 700;
 }
 #root .wrapper .nav-menu li:hover {
@@ -133,30 +133,30 @@ ul li {
 #root .wrapper .main-content {
   margin-top: 119px !important;
 }
-#root .wrapper .main-content .loginForm {
+#root .wrapper .main-content .loginForm, #root .wrapper .main-content .recoverForm {
   font-style: italic;
 }
-#root .wrapper .main-content .loginForm input {
+#root .wrapper .main-content .loginForm input, #root .wrapper .main-content .recoverForm input {
   width: 100% !important;
 }
-#root .wrapper .main-content .loginForm a {
+#root .wrapper .main-content .loginForm a, #root .wrapper .main-content .recoverForm a {
   text-decoration: underline !important;
 }
-#root .wrapper .main-content .loginForm a:hover {
+#root .wrapper .main-content .loginForm a:hover, #root .wrapper .main-content .recoverForm a:hover {
   color: #368090 !important;
 }
-#root .wrapper .main-content .loginForm .formFieldError {
+#root .wrapper .main-content .loginForm .formFieldError, #root .wrapper .main-content .recoverForm .formFieldError {
   border: 1px solid #e11d48;
 }
-#root .wrapper .main-content .loginForm .formFieldErrorMessage {
+#root .wrapper .main-content .loginForm .formFieldErrorMessage, #root .wrapper .main-content .recoverForm .formFieldErrorMessage {
   color: #e11d48;
 }
-#root .wrapper .main-content .loginForm .formSubmitBtn {
+#root .wrapper .main-content .loginForm .formSubmitBtn, #root .wrapper .main-content .recoverForm .formSubmitBtn {
   padding: 5px 0;
   border-radius: 10px;
   opacity: 0.8;
 }
-#root .wrapper .main-content .loginForm .formSubmitBtn:hover {
+#root .wrapper .main-content .loginForm .formSubmitBtn:hover, #root .wrapper .main-content .recoverForm .formSubmitBtn:hover {
   opacity: 1;
 }
 #root .wrapper .main-content .registerForm {

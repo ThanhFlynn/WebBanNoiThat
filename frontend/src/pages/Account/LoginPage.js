@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useLoginFormValidator } from '../../components/loginForm/hooks/useLoginFormValidator';
-import clsx from 'clsx'
+import clsx from 'clsx';
 import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +19,13 @@ const LoginPage = () => {
   
   const { errors, validateForm, onBlurField } = useLoginFormValidator(form);
   const [errorLogin, setErrorLogin] = useState("");
+  const [show, setShow] = useState();
+  const [errorRecover, setErrorRecover] = useState("");
+  const [recoverEmail, setRecoverEmail] = useState({email: ''});
+
+  function toggleShow() {
+    setShow(!show);
+  }
 
   const onUpdateField = e => {
     let field = e.target.name;
@@ -32,6 +40,10 @@ const LoginPage = () => {
         errors,
         field,
       });
+  };
+
+  const onRecoverEmail = e =>{
+    recoverEmail.email = e.target.value;
   };
 
   const onSubmitForm = e => {
@@ -53,8 +65,17 @@ const LoginPage = () => {
     })
     .then((response) => {
       if (!response.ok) {
+        if(response.status === 400)
           throw new Error(
             `This is an HTTP error: The status is ${response.status}`
+          );
+        else if(response.status === 406)
+          throw new Error(
+              "Please confirm your email before login"
+          );
+        else if(response.status === 401)
+          throw new Error(
+              "Email or password is incorrect!"
           );
       }
       return response.json();
@@ -65,14 +86,42 @@ const LoginPage = () => {
       navigate("/");
     })
     .catch((err) => {
-        setErrorLogin("Email or password is incorrect!");
+        setErrorLogin(err.message);
     });
+  }
+
+  let handleRecover = async () =>{
+    try {
+      let response = await fetch(`/api/accounts/recoverPassword/`,{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(recoverEmail),
+      });
+
+      let data = await response.json();
+
+      if(response.status === 200){
+        setErrorRecover(data.message);
+      }else if(response.status === 400){
+        setErrorRecover(data.error_message);
+      }
+    } catch (error) {
+      setErrorRecover("Lỗi kết nối! Vui lòng thử lại sau");
+    }
+  }
+
+  const onRecoverForm = e =>{
+    e.preventDefault();
+    handleRecover();
   }
 
   return (
     <div class="container" style={{marginTop:40+"px"}}> 
         <div class="row">
           <div class="col-8 offset-2 col-md-6 offset-md-3 text-center">
+            {!show ? (
             <form className="loginForm mt-5" onSubmit={onSubmitForm}>
                 <h1>Đăng nhập</h1>
                 <p>Chưa có tài khoản?</p>
@@ -119,8 +168,29 @@ const LoginPage = () => {
                     ) : null}
                 </div>
                 <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Đăng nhập"/>
-                <Link to="/accounts/forgot/">Quên mật khẩu</Link>
+                <Link to='#' onClick={toggleShow}>Quên mật khẩu</Link>
             </form>
+            ) : (
+            <form className='recoverForm mt-5' onSubmit={onRecoverForm}>
+              <h1>Reset Password</h1>
+              <p>Vui lòng nhập địa chỉ email của bạn dưới đây. Bạn sẽ nhận được một liên kết để thiết lập lại mật khẩu của bạn.</p>   
+              {errorRecover ? (
+                  <p className="formFieldErrorMessage">{errorRecover}</p>
+                ) : null}
+              <div className="formGroup text-start">
+                <label htmlFor='recoveremail' className="formLabel mt-3">Email:</label>
+                <input
+                  className="form-control form-control-dark"
+                  type="email"
+                  name="recoveremail"
+                  id='recoveremail'
+                  onChange={onRecoverEmail}
+                />
+              </div>
+              <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Submit"/>
+              <Link to='#' onClick={toggleShow}>Cancel</Link>
+            </form>
+            )}
           </div>
         </div>
     </div>
