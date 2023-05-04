@@ -38,12 +38,16 @@ class Categories(models.Model):
 
 class Products(models.Model):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    product_code = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=255)
-    price = models.BigIntegerField()
+    price = models.BigIntegerField(blank=False, null=False)
     size = models.CharField(max_length=50)
-    origin = models.CharField(max_length=50, blank=True)
     material = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="frontend/src/assets/img/products/", width_field=None, height_field=None, max_length=255)
+    quantity = models.PositiveIntegerField(blank=False, null=False)
+    warranty = models.CharField(max_length=255,blank=True,null=True)
+    image = models.CharField(max_length=1000)
+    description = models.TextField(blank=True,null=True)
+    purchases = models.PositiveBigIntegerField(auto_created=True, default=0)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -51,4 +55,4 @@ class Products(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['-updated', '-created']
+        ordering = ['-category','-updated', '-created']

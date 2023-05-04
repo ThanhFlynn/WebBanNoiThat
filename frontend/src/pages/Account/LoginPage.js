@@ -118,9 +118,9 @@ const LoginPage = () => {
   }
 
   return (
-    <div class="container" style={{marginTop:40+"px"}}> 
-        <div class="row">
-          <div class="col-8 offset-2 col-md-6 offset-md-3 text-center">
+    <div className="container" style={{marginTop:40+"px"}}> 
+        <div className="row">
+          <div className="col-8 offset-2 col-md-6 offset-md-3 text-center">
             {!show ? (
             <form className="loginForm mt-5" onSubmit={onSubmitForm}>
                 <h1>Đăng nhập</h1>

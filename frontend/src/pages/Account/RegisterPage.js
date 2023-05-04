@@ -70,9 +70,9 @@ const RegisterPage = () => {
   }
 
   return (
-    <div class="container" style={{marginTop:120+"px"}}> 
-        <div class="row">
-          <div class="col-8 offset-2 col-md-6 offset-md-3 text-center">
+    <div className="container" style={{marginTop:120+"px"}}> 
+        <div className="row">
+          <div className="col-8 offset-2 col-md-6 offset-md-3 text-center">
             {isRegister === false ? (
             <form className="registerForm mt-1 mb-4" onSubmit={onSubmitForm}>
                 <h1>Đăng ký</h1>
@@ -196,13 +196,13 @@ const RegisterPage = () => {
                     ) : null}
                 </div> */}
                 <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Tạo"/>
-                <p>Already have an account?</p>
-                <Link to="/accounts/login/">SIGN IN</Link>
+                <p>Đã có tài khoản?</p>
+                <Link to="/accounts/login/">Đăng nhập</Link>
             </form>
             ) : (
               <div className='fst-italic' style={{marginTop:100+"px"}}>
-                <h1>Register successful!</h1>
-                <Link to="/accounts/login/" className='text-decoration-underline'>SIGN IN</Link>
+                <h1>Đăng ký thành công</h1>
+                <Link to="/accounts/login/" className='text-decoration-underline'>Đăng nhập</Link>
               </div>
             )}
           </div>

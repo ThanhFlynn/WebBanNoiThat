@@ -42,7 +42,7 @@ const RecoverPasswordPage = () => {
 
     let handleRecover = async () =>{
       try {
-        let response = await fetch(`http://127.0.0.1:8000/api/accounts/doRecoverPassword?${sid}`,{
+        let response = await fetch(`/api/accounts/doRecoverPassword?${sid}`,{
           method: "POST",
           headers: {
               'Content-Type': 'application/json'
@@ -63,9 +63,9 @@ const RecoverPasswordPage = () => {
   }
 
     return (
-        <div class="container" style={{marginTop:40+"px"}}> 
-        <div class="row">
-          <div class="col-8 offset-2 col-md-6 offset-md-3 text-center">
+        <div className="container" style={{marginTop:40+"px"}}> 
+        <div className="row">
+          <div className="col-8 offset-2 col-md-6 offset-md-3 text-center">
             <form className='recoverForm mt-5' onSubmit={onRecoverPassword}>
               <h1>Reset Password</h1>
               <div className="formGroup text-start">

@@ -52,9 +52,9 @@ const ChangePassword = ({authTokens}) => {
     }
 
     return (
-        <div class="container"> 
-            <div class="row">
-                <div class="col-8 offset-2 col-md-6 offset-md-3 text-center">
+        <div className="container"> 
+            <div className="row">
+                <div className="col-8 offset-2 col-md-6 offset-md-3 text-center">
                     <form className="registerForm mt-1 mb-4" onSubmit={onChangePW}>
                         <h1>Thay đổi mật khẩu</h1>
                         {checkStatus ? (

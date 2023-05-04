@@ -10,9 +10,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import User
+from .models import User, Menu, Categories, Products
 from .utils import NoteController, UserController
-from .serializers import UserSerializer, UserLoginSerializer
+from .serializers import UserSerializer, UserLoginSerializer, MenuSerializer, CategoriesSerializer, ProductsSerializer
 from .tokens import account_activation_token
 import jwt
 
@@ -64,7 +64,6 @@ def getNotes(request):
 
     if request.method == 'POST':
         return NoteController.createNote(request)
-
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def getNote(request, pk):
@@ -192,8 +191,7 @@ def recoverPassword(request):
     try:
         user = User.objects.get(email=email)
 
-        #domain = get_current_site(request).domain
-        domain = "localhost:3000"
+        domain = get_current_site(request).domain
         token = account_activation_token.make_token(user)
 
         message = """
@@ -284,3 +282,21 @@ def changePW(request):
             'error_messages': "Something wrong!",
             'error_code': 400
         }, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+def getMenus(request):
+    menu = Menu.objects.all()
+    serializer = MenuSerializer(menu, many=True)
+    return Response(serializer.data)
+
+@api_view(["GET"])
+def getCategories(request):
+    categories = Categories.objects.all()
+    serializer = CategoriesSerializer(categories, many=True)
+    return Response(serializer.data)
+
+@api_view(["GET"])
+def getProducts(request):
+    products = Products.objects.all()
+    serializer = ProductsSerializer(products, many=True)
+    return Response(serializer.data)

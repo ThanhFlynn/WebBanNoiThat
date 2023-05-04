@@ -27,26 +27,26 @@ const Header = () => {
           <ul className='header-action d-flex align-items-center justify-content-center'>
             <li>
               <Link to="#" className='d-flex align-items-center justify-content-center'>
-                <i class="fa-regular fa-heart"></i>
+                <i className="fa-regular fa-heart"></i>
                 <p>yêu thích</p>
               </Link>
             </li>
             <li>
               {isLogin === false ? (
                 <Link to="/accounts/login/" className='d-flex align-items-center justify-content-center'>
-                  <i class="fa-regular fa-circle-user"></i>
+                  <i className="fa-regular fa-circle-user"></i>
                   <p>đăng nhập</p>
                 </Link>
                 ) : (
                 <Link to="/accounts/" className='d-flex align-items-center justify-content-center'>
-                  <i class="fa-regular fa-circle-user"></i>
+                  <i className="fa-regular fa-circle-user"></i>
                   <p>tài khoản</p>
                 </Link>
               )}
             </li>
             <li>
               <Link to="#" className='d-flex align-items-center justify-content-center'>
-                <i class="fa-solid fa-cart-shopping"></i>
+                <i className="fa-solid fa-cart-shopping"></i>
                 <p>giỏ hàng</p>
               </Link>
             </li>

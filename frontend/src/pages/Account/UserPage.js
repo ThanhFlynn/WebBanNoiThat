@@ -41,6 +41,12 @@ const UserPage = () => {
                 'Authentication':'Bearer ' + String(authTokens.access_token)
             }
         })
+        
+        if(response.status === 401){
+            alert("Phiên đăng nhập đã hết! Vui lòng đăng nhập lại!");
+            logOut();
+        }
+
         if(response.status === 500){
             logOut();
         }

@@ -56,9 +56,9 @@ const UpdateAccount = ({user,authTokens}) => {
     }
 
     return (
-        <div class="container"> 
-            <div class="row">
-                <div class="col-8 offset-2 col-md-6 offset-md-3 text-center">
+        <div className="container"> 
+            <div className="row">
+                <div className="col-8 offset-2 col-md-6 offset-md-3 text-center">
                     <form className="registerForm mt-1 mb-4" onSubmit={onUpdateAccount}>
                         <h1>Cập nhật tài khoản</h1>
                         {checkStatus !== null ? (
