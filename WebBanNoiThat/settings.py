@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1v)+0$ilgwrc=o-65)xjd+859fzle7ltfbj9ap)xd8lwh+youo'
+SECRET_KEY = str(os.getenv('DJANGO_SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -39,9 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
+    'images.apps.ImagesConfig',
     'rest_framework',
     #'rest_framework.authtoken',
-    'corsheaders'
+    'corsheaders',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -86,11 +90,11 @@ WSGI_APPLICATION = 'WebBanNoiThat.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'WebBanNoiThat',
-        'USER': 'root',
-        'PASSWORD': 'ThanhFlynn2441',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': str(os.getenv('DJANGO_DATABASE_NAME')),
+        'USER': str(os.getenv('DJANGO_DATABASE_USER')),
+        'PASSWORD': str(os.getenv('DJANGO_DATABASE_PASSWORD')),
+        'HOST': str(os.getenv('DJANGO_DATABASE_HOST')),
+        'PORT': str(os.getenv('DJANGO_DATABASE_PORT')),
     }
 }
 
@@ -175,8 +179,18 @@ SIMPLE_JWT = {
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = str(os.getenv('DJANGO_EMAIL_HOST'))
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "thanhnct244@gmail.com"
-EMAIL_HOST_PASSWORD = 'tbefsidnmfqldxst'
+EMAIL_HOST_USER = str(os.getenv('DJANGO_EMAIL_HOST_USER'))
+EMAIL_HOST_PASSWORD = str(os.getenv('DJANGO_EMAIL_HOST_PASSWORD'))
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': str(os.getenv('cloud_name')),
+    'API_KEY': str(os.getenv('api_key')),
+    'API_SECRET': str(os.getenv('api_secret')),
+}
+
+MEDIA_URL = '/products/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

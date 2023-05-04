@@ -45,7 +45,7 @@ class Products(models.Model):
     material = models.CharField(max_length=255)
     quantity = models.PositiveIntegerField(blank=False, null=False)
     warranty = models.CharField(max_length=255,blank=True,null=True)
-    image = models.CharField(max_length=1000)
+    image = models.ImageField(upload_to='images')
     description = models.TextField(blank=True,null=True)
     purchases = models.PositiveBigIntegerField(auto_created=True, default=0)
     updated = models.DateTimeField(auto_now=True)
@@ -55,4 +55,4 @@ class Products(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['-category','-updated', '-created']
+        ordering = ['category','-updated', '-created']

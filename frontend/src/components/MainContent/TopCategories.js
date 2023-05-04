@@ -4,11 +4,10 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const TopCategories = () => {
+const TopCategories = ({pds}) => {
     const config = {
         dots: false,
         infinite: false,
-        speed: 300,
         slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
@@ -18,17 +17,19 @@ const TopCategories = () => {
                     arrows: false,
                     infinite: true,
                     autoplay: true,
+                    speed: 500,
                     // centerMode: true,
                     // centerPadding: '40px',
                     slidesToShow: 3
                 }
             },
             {
-                breakpoint: 480,
+                breakpoint: 576,
                 settings: {
                     arrows: false,
                     infinite: true,
                     autoplay: true,
+                    speed: 500,
                     // centerMode: true,
                     // centerPadding: '40px',
                     slidesToShow: 2
@@ -38,28 +39,12 @@ const TopCategories = () => {
     };
  
     const [settings, setSettings] = useState(config);
-    const [products, setProducts] = useState([]);
-    useEffect(() => {
-        getProducts();
-    },[])
-
-    let getProducts = async() =>{
-        let response = await fetch("/api/getProducts/");
-        let data = await response.json();
-        data.sort(function(a,b){
-            return b["purchases"] - a["purchases"];
-        });
-        let product_item = [];
-        for(let i=0; i<6; ++i)
-            product_item[i] = data[i];
-        setProducts(product_item);
-    }
     
     return (
-        <div className="container topCategories mb-5">
+        <div className="container topCategories">
             <h2>Sản phẩm bán chạy</h2>
             <Slider {...settings} className="mt-4 text-center">
-                {products.map((item,index) => {
+                {pds.map((item,index) => {
                     return <div key={index} className="product-item">
                                 <img src={item["image"]} alt="product-img"></img>
                                 <div className='item-content'>
@@ -70,7 +55,7 @@ const TopCategories = () => {
                                     <p className='price text-end'>{item["price"].toLocaleString('en-US') + "₫"}</p>
                                     <div className='product-button'>
                                         <div className='product-button-inner d-flex justify-content-between align-items mt-2 mb-2'>
-                                            <Link to="add-to-cart" className='add-to-cart'>Thêm vào giỏ</Link>
+                                            <p className='add-to-cart'>Thêm vào giỏ</p>
                                             <Link to="view-detail" className='view-detail'>Xem thêm</Link>
                                         </div>
                                     </div>

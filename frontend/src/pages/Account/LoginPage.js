@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useLoginFormValidator } from '../../components/loginForm/hooks/useLoginFormValidator';
-import clsx from 'clsx';
 import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -16,8 +14,7 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-  
-  const { errors, validateForm, onBlurField } = useLoginFormValidator(form);
+
   const [errorLogin, setErrorLogin] = useState("");
   const [show, setShow] = useState();
   const [errorRecover, setErrorRecover] = useState("");
@@ -34,12 +31,6 @@ const LoginPage = () => {
       [field]: e.target.value,
     };
     setForm(nextFormState);
-    if (errors[field].dirty)
-      validateForm({
-        form: nextFormState,
-        errors,
-        field,
-      });
   };
 
   const onRecoverEmail = e =>{
@@ -48,11 +39,7 @@ const LoginPage = () => {
 
   const onSubmitForm = e => {
     e.preventDefault();
-    let { isValid } = validateForm({ form, errors, forceTouchErrors: true });
-    if (!isValid) return;
-    else{
-      handleLogin();
-    }
+    handleLogin();
   };
 
   let handleLogin = async () =>{
@@ -132,40 +119,24 @@ const LoginPage = () => {
                 <div className="formGroup text-start">
                     <label htmlFor='email' className="formLabel mt-3">Email</label>
                     <input
-                    className={clsx(
-                        "form-control form-control-dark",
-                        errors.email.dirty && errors.email.error && "formFieldError"
-                    )}
+                    className="form-control form-control-dark"
                     type="email"
                     aria-label="Email field"
                     name="email"
                     id='email'
                     onChange={onUpdateField}
-                    onBlur={onBlurField}
                     />
-                    {errors.email.dirty && errors.email.error ? (
-                    <p className="formFieldErrorMessage">{errors.email.message}</p>
-                    ) : null}
                 </div>
                 <div className="formGroup text-start">
                     <label className="formLabel mt-3">Password</label>
                     <input
-                      className={clsx(
-                          "form-control form-control-dark",
-                          errors.password.dirty && errors.password.error && "formFieldError"
-                      )}
+                      className= "form-control form-control-dark"
                       type="password"
                       aria-label="Password field"
                       name="password"
                       id='password'
                       onChange={onUpdateField}
-                      onBlur={onBlurField}
                     />
-                    {errors.password.dirty && errors.password.error ? (
-                    <p className="formFieldErrorMessage">
-                      {errors.password.message}
-                    </p>
-                    ) : null}
                 </div>
                 <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Đăng nhập"/>
                 <Link to='#' onClick={toggleShow}>Quên mật khẩu</Link>

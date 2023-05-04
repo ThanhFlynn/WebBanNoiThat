@@ -83,6 +83,63 @@
                     }
                 }
             }
+            .main-content {
+                .slick-slider{
+                    .slick-list{
+                        .slick-track{
+                            .product-item{
+                                height: 281px;
+                                img{
+                                    height: 150px;
+                                }
+                                .item-content{
+                                    .title {
+                                        .product-name {
+                                            font-weight: 700;
+                                            font-style: oblique;
+                                            font-size: 14px;
+                                        }
+                                    }
+                                    .product-button{
+                                        font-size: 12px;
+                                        &-inner {
+                                            .add-to-cart {
+                                                background-color: #ffffff;
+                                                border: 1px solid #000000;
+                                                padding: 5px 0;
+                                    
+                                                &:hover {
+                                                    background-color: #000000;
+                                                    color: #ffffff !important;
+                                                }
+                                            }
+                                    
+                                            .view-detail {
+                                                padding: 5.5px 4px;
+                                                background-color: #000000;
+                                                color: #ffffff !important;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .newproducts{
+                    .product-item{
+                        &-inner{
+                            .item-content{
+                                .title{
+                                    .product-name{
+                                        font-size: 14px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

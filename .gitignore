@@ -1,16 +1,11 @@
 <<<<<<< HEAD
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-/env
-/api/__pycache__
-/WebBanNoiThat/__pycache__
-
-# dependencies
 =======
 # created by virtualenv automatically
 /api/__pycache__
 /api/migrations/__pycache__
 /WebBanNoiThat/__pycache__
+/WebBanNoiThat/.env
 /env
 
 >>>>>>> main
@@ -28,8 +23,6 @@
 # misc
 =======
 /frontend/# testing
-/frontend/coverage
-
 /frontend/# production
 # /frontend/build
 
