@@ -74,7 +74,7 @@ const RegisterPage = () => {
         <div className="row">
           <div className="col-8 offset-2 col-md-6 offset-md-3 text-center">
             {isRegister === false ? (
-            <form className="registerForm mt-1 mb-4" onSubmit={onSubmitForm}>
+            <form className="registerForm mt-1 mb-5" onSubmit={onSubmitForm}>
                 <h1>Đăng ký</h1>
                 {errorRegister !== null ? (
                   <p className="formFieldErrorMessage">{errorRegister}</p>

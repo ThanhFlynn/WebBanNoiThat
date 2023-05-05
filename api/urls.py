@@ -2,9 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('',views.getRoutes, name="routes"),
-    path('notes/',views.getNotes, name="notes"),
-    path('notes/<str:pk>',views.getNote, name="note"),
     path('accounts/detail/',views.getAccount, name="account"),
     path('accounts/register/',views.UserRegisterView, name="register"),
     path('accounts/login/',views.UserLoginView, name="login"),
@@ -15,4 +12,7 @@ urlpatterns = [
     path('getMenus/',views.getMenus, name="getMenus"),
     path('getCategories/',views.getCategories, name="getCategories"),
     path('getProducts/',views.getProducts, name="getProducts"),
+    path('getWishList/',views.getWishList, name="getWishList"),
+    path('postWishList/',views.postWishList, name="postWishList"),
+    path('deleteItemWishList/',views.deleteItemWishList, name="deleteItemWishList"),
 ]

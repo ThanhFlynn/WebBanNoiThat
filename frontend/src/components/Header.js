@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import logo from '../assets/icon/furniture.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+
+  let navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useState(false);
 
@@ -11,11 +13,36 @@ const Header = () => {
       setIsLogin(true);
   },[])
 
+  let logOut = e =>{
+    e.preventDefault();
+    sessionStorage.removeItem('info-user-token');
+    window.location.reload();
+  }
+
+  let handleActiveNav = e =>{
+    e.preventDefault();
+    let nav_menu = document.getElementsByClassName("nav-menu");
+    nav_menu[0].classList.toggle("activeNav");
+  }
+
+  let redirectToWishList = e =>{
+    e.preventDefault();
+    if(isLogin){
+      navigate("/accounts/wishlist");
+    }else{
+      alert("Vui lòng đăng nhập!");
+      navigate("/accounts/login");
+    }
+  }
+
   return (
     <div className="header bg-white p-3 position-fixed top-0 start-0">
       <div className="container-fluid">
         <div className="d-flex align-items-center justify-content-between">
-          <div className='header-logo'>
+          <div className='header-logo d-flex align-items-center justify-content-between'>
+            <div className='menu-bars' onClick={handleActiveNav}>
+              <i class="fa-solid fa-bars"></i>
+            </div>
             <a href='/' className='d-flex align-items-center justify-content-center'>
               <img src={logo} alt='Logo'></img>
               <p>Furniture</p>
@@ -26,7 +53,7 @@ const Header = () => {
           </form>
           <ul className='header-action d-flex align-items-center justify-content-center'>
             <li>
-              <Link to="#" className='d-flex align-items-center justify-content-center'>
+              <Link className='d-flex align-items-center justify-content-center' onClick={redirectToWishList}>
                 <i className="fa-regular fa-heart"></i>
                 <p>yêu thích</p>
               </Link>
@@ -38,10 +65,19 @@ const Header = () => {
                   <p>đăng nhập</p>
                 </Link>
                 ) : (
-                <Link to="/accounts/" className='d-flex align-items-center justify-content-center'>
-                  <i className="fa-regular fa-circle-user"></i>
-                  <p>tài khoản</p>
-                </Link>
+                <div className='account-section'>
+                  <div className='d-flex align-items-center justify-content-center'>
+                    <i className="fa-regular fa-circle-user"></i>
+                    <p className='text-uppercase'>tài khoản</p>
+                  </div>
+                  <ul className='accounts-choice'>
+                    <li><Link to='/accounts'>Lịch sử mua hàng</Link></li>
+                    <li><Link to='/accounts/update'>Cập nhật tài khoản</Link></li>
+                    <li><Link to='/accounts/changepassword'>Thay đổi mật khẩu</Link></li>
+                    <li><Link to='/accounts/wishlist'>Danh sách yêu thích</Link></li>
+                    <li><Link onClick={logOut}>Đăng xuất</Link></li>
+                  </ul>
+                </div>
               )}
             </li>
             <li>
@@ -52,9 +88,6 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        {/* <form action='' className='header-form-2 flex-grow-1 postion-relative'>
-            <input type="search" class="form-control form-control-dark" placeholder="Tìm kiếm..." aria-label="Search"></input>
-          </form> */}
       </div>
     </div>
   )

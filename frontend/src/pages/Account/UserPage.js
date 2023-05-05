@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import UpdateAccount from './AccountAction/UpdateAccount';
 import ChangePassword from './AccountAction/ChangePassword';
+import ProductWishList from './AccountAction/ProductWishList';
 
 const delay = ms => new Promise(
   resolve => setTimeout(resolve, ms)
@@ -18,11 +19,6 @@ const UserPage = () => {
         sessionStorage.removeItem('info-user-token');
         window.location.reload();
     }
-
-    let handleClick = async event => {
-        await delay(1);
-        window.location.reload();
-    };
 
     useEffect(() => {
         if(authTokens == null){
@@ -61,17 +57,7 @@ const UserPage = () => {
     return (
         <div className='container'>
             <div className='row'>
-                <div className='col-3 bg-primary p-5'>
-                    <ul>
-                        <li><p>{user.username}</p></li>
-                        <li><Link>Lịch sử mua hàng</Link></li>
-                        <li><Link to='/accounts/update' onClick={handleClick}>Cập nhật tài khoản</Link></li>
-                        <li><Link to='/accounts/changepassword' onClick={handleClick}>Thay đổi mật khẩu</Link></li>
-                        <li><Link to='/accounts/wishlist' onClick={handleClick}>Danh sách yêu thích</Link></li>
-                        <li><Link onClick={logOut}>Đăng xuất</Link></li>
-                    </ul>
-                </div>
-                <div className='col-9 bg-secondary p-5'>
+                <div className='col-12 p-5'>
                     {accountAction == null ? (
                         <p>Hello</p>
                     ) : (
@@ -79,7 +65,7 @@ const UserPage = () => {
                             <UpdateAccount user={user} authTokens={authTokens}/>
                         ):(
                             accountAction == "wishlist" ? (
-                                <p>Wishlist</p>
+                                <ProductWishList />
                             ):(
                                 accountAction == "changepassword" ? (
                                     <ChangePassword authTokens={authTokens}/>

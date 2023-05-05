@@ -1,82 +1,22 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 from django.core.mail import EmailMessage
-from django.template.loader import get_template
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import User, Menu, Categories, Products
-from .utils import NoteController, UserController
-from .serializers import UserSerializer, UserLoginSerializer, MenuSerializer, CategoriesSerializer, ProductsSerializer
+from .models import User, Menu, Categories, Products, WishList
+from .utils import UserController
+from .serializers import UserSerializer, UserLoginSerializer, MenuSerializer, CategoriesSerializer, ProductsSerializer, WishListSerializer
 from .tokens import account_activation_token
 import jwt
 
 # Create your views here.
 
-
-@api_view(['GET'])
-def getRoutes(request):
-
-    routes = [
-        {
-            'Endpoint': '/notes/',
-            'method': 'GET',
-            'body': None,
-            'description': 'Returns an array of notes'
-        },
-        {
-            'Endpoint': '/notes/id',
-            'method': 'GET',
-            'body': None,
-            'description': 'Returns a single note object'
-        },
-        {
-            'Endpoint': '/notes/create/',
-            'method': 'POST',
-            'body': {'body': ""},
-            'description': 'Creates new note with data sent in post request'
-        },
-        {
-            'Endpoint': '/notes/id/update/',
-            'method': 'PUT',
-            'body': {'body': ""},
-            'description': 'Creates an existing note with data sent in post request'
-        },
-        {
-            'Endpoint': '/notes/id/delete/',
-            'method': 'DELETE',
-            'body': None,
-            'description': 'Deletes and exiting note'
-        },
-    ]
-    return Response(routes)
-
-@api_view(['GET', 'POST'])
-def getNotes(request):
-
-    if request.method == 'GET':
-        return NoteController.getNotesList(request)
-
-    if request.method == 'POST':
-        return NoteController.createNote(request)
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def getNote(request, pk):
-
-    if request.method == 'GET':
-        return NoteController.getNoteDetail(request, pk)
-
-    if request.method == 'PUT':
-        return NoteController.updateNote(request, pk)
-
-    if request.method == 'DELETE':
-        return NoteController.deleteNote(request, pk)
-    
 @api_view(['POST'])
 def UserRegisterView(request):
     serializer = UserSerializer(data=request.data)
@@ -118,7 +58,7 @@ def UserRegisterView(request):
 
     else:
         return Response({
-            'error_message': 'This email is not exist!',
+            'error_message': 'Email already exists!',
             'errors_code': 400,
         }, status=status.HTTP_400_BAD_REQUEST)
     
@@ -300,3 +240,91 @@ def getProducts(request):
     products = Products.objects.all()
     serializer = ProductsSerializer(products, many=True)
     return Response(serializer.data)
+
+@api_view(["GET"])
+def getWishList(request):
+    try:
+        access_token = request.headers["Authentication"][7:]
+        payload = jwt.decode(jwt=access_token, key=settings.SECRET_KEY, algorithms=['HS256'])
+        user_id = payload["user_id"]
+    except:
+        return Response({
+            'error_messages': "Hết phiên đăng nhập. Vui lòng đăng nhập lại!",
+            'error_code': 401
+        }, status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        wishlist = WishList.objects.filter(user = user_id)
+        products = Products.objects.filter(pk__in = wishlist.values_list("products"))
+        serializer = ProductsSerializer(products, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except:
+        return Response({
+            'error_messages': serializer.errors,
+            'error_code': 400
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(["POST"])
+def postWishList(request):
+    try:
+        access_token = request.headers["Authentication"][7:]
+        payload = jwt.decode(jwt=access_token, key=settings.SECRET_KEY, algorithms=['HS256'])
+        user_id = payload["user_id"]
+    except:
+        return Response({
+            'error_messages': "Something wrong!",
+            'error_code': 401
+        }, status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        data = request.data
+        user = User.objects.get(pk=user_id)
+        product = Products.objects.get(pk=data["id"])
+        try:
+            wishlist = WishList.objects.get(user = user_id, products = data["id"])
+        except:
+            wishlist = None
+        if wishlist == None:
+            wishlist = WishList(user = user, products = product)
+            wishlist.save()
+
+        return Response({
+            'message': "Add wishlist successful!"
+        }, status=status.HTTP_200_OK)
+    except:
+        return Response({
+            'error_messages': "Something wrong!",
+            'error_code': 400
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(["DELETE"])
+def deleteItemWishList(request):
+    try:
+        access_token = request.headers["Authentication"][7:]
+        payload = jwt.decode(jwt=access_token, key=settings.SECRET_KEY, algorithms=['HS256'])
+        user_id = payload["user_id"]
+    except:
+        return Response({
+            'error_messages': "Something wrong!",
+            'error_code': 401
+        }, status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        data = request.data
+        try:
+            wishlist = WishList.objects.get(user = user_id, products = data["id"])
+        except:
+            wishlist = None
+        if wishlist == None:
+            return Response({
+                'error_messages': "Something wrong!",
+                'error_code': 400
+            }, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            wishlist.delete()
+            return Response({
+                'message': "Delete this product successful!"
+            }, status=status.HTTP_200_OK)
+    except:
+        return Response({
+            'error_messages': "Something wrong!",
+            'error_code': 400
+        }, status=status.HTTP_400_BAD_REQUEST)

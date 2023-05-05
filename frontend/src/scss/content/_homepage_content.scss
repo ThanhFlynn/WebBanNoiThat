@@ -41,7 +41,7 @@
                     transition: width 2s linear 2s;
                     a{
                         display: block;
-                        padding: 12px 14px;
+                        padding: 12px;
                         background-color: rgba($color: #000000, $alpha: 0.2);
                         &:hover{
                             color: #21409A !important;
@@ -64,6 +64,7 @@
             margin-top: 114px !important;
 
             .loginForm, .recoverForm {
+                height: calc(100vh - 114px - 48px);
                 font-style: italic;
 
                 input {
@@ -98,6 +99,7 @@
             }
 
             .registerForm {
+                height: calc(100vh - 114px - 48px);
                 font-style: italic;
 
                 input {
@@ -183,6 +185,9 @@
                                         font-weight: 700;
                                         font-style: oblique;
                                     }
+                                    span:hover{
+                                        cursor: pointer;
+                                    }
                                     svg{
                                         margin-top: 5px;
                                     }
@@ -249,6 +254,9 @@
                                         font-weight: 700;
                                         font-style: oblique;
                                         height: 50px;
+                                    }
+                                    span:hover{
+                                        cursor: pointer;
                                     }
                                     svg{
                                         padding-top: 5px;
@@ -329,11 +337,108 @@
                                     color: #252525;
                                     font-size: 14px;
                                     font-weight: 700;
-                                    letter-spacing: 2px;
+                                    letter-spacing: 1.5px;
                                     line-height: 28px;
+                                    text-transform: uppercase;
                                 }
                             }
                         }
+                    }
+                }
+            }
+
+            .wish_list{
+                .product-item{
+                    padding: 5px 5px;
+                    &-inner{
+                        position: relative;
+                        border: 1px solid rgba($color: #000000, $alpha: 0.2);
+                        border-radius: 10px;
+                        .delete-item{
+                            display: none;
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                            color: rgba($color: #000000, $alpha: 0.7);
+                            svg{
+                                font-size: 20px;
+                            }
+                            &:hover{
+                                cursor: pointer;
+                            }
+                        }
+                        img{
+                            width: 100%;
+                            height: 175px;
+                            object-fit: cover;
+                            border-top-left-radius: 10px;
+                            border-top-right-radius: 10px;
+                        }
+                        .item-content{
+                            padding: 0 10px;
+                            .title{
+                                .product-name{
+                                    height: 70px;
+                                    font-weight: 600;
+                                    font-style: italic;
+                                }
+                            }
+                            .price{
+                                color: #ff0000;
+                            }
+                        }
+                        &:hover{
+                            .delete-item{
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .footer-section {
+            background-color: #F6F6F6;
+            .container{
+                padding: 30px 0;
+                border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+                strong{
+                    letter-spacing: 2px;
+                }
+                .list-contact {
+                    font-size: 10px;
+                    letter-spacing: 1.5px;
+                    color: #252525;
+                    li {
+                        margin: 20px 0;
+                        a:hover{
+                            color: #368090 !important;
+                            text-decoration: underline !important;
+                        }
+                    }
+                }
+                .part-text{
+                    padding-bottom: 20px;
+                    p{
+                        font-size: 13px;
+                        letter-spacing: 1.5px;
+                        color: #666666;
+                        padding: 15px 0 !important;
+                    }
+                }
+                .social-media{
+                    gap:20px;
+                    svg{
+                        opacity: 0.5;
+                        &:hover{
+                            opacity: 1;
+                            cursor: pointer;
+                        }
+                    }
+                }
+                &:last-child{
+                    padding: 10px 0 !important;
+                    p{
+                        color: #666666;
                     }
                 }
             }

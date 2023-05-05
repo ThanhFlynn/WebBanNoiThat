@@ -6,14 +6,14 @@ import{
 
 import './assets/css/style.css';
 import Header from './components/Header';
-// import NodeListPage from './pages/NodeListPage';
-// import NotePage from "./pages/NotePage";
 import HomePage from "./pages/HomePage/HomePage";
+import ProductsPage from "./pages/Products/ProductsPage";
 import LoginPage from "./pages/Account/LoginPage";
 import RegisterPage from "./pages/Account/RegisterPage";
 import UserPage from "./pages/Account/UserPage";
 import NavBar from "./components/NavBar";
 import RecoverPasswordPage from "./pages/Account/RecoverPasswordPage";
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -31,8 +31,16 @@ function App() {
               <Route path="register" element={<RegisterPage />} />
               <Route path="recoverPassword/:sid" element={<RecoverPasswordPage />} />
             </Route>
+            <Route path="/products/:menus">
+              <Route index element={<ProductsPage />} />
+              <Route path=":categories">
+                <Route index element={<ProductsPage />} />
+                <Route path=":proid" element={<ProductsPage />} />
+              </Route>
+            </Route>
           </Routes>
         </div>
+        <Footer />
       </div>
     </HRouter>
   );

@@ -8,12 +8,11 @@ import ShopifySection from '../../components/MainContent/ShopifySection'
 
 const HomePage = () => {
 
-  const [products, setProducts] = useState([]);
   const [topproducts, setTopProducts] = useState([]);
   const [newproducts, setNewProducts] = useState([]);
 
   useEffect(() => {
-      getProducts();
+    getProducts();
   },[])
 
   let getProducts = async() =>{
@@ -21,7 +20,6 @@ const HomePage = () => {
       let data = await response.json();
       getTopProduct(data);
       getNewProduct(data);
-      setProducts(data);
   }
 
   let getTopProduct = (products) =>{

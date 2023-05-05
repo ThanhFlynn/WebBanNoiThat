@@ -4,8 +4,15 @@
             width: 100%;
             padding: 10px 0;
             border-bottom: 1px solid rgba($color: #000000, $alpha: 0.2);
-            z-index: 2;
+            z-index: 3;
             &-logo {
+                .menu-bars{
+                    display: none;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    font-size: 24px;
+                    margin-right: 10px !important;
+                }
                 img {
                     width: 30px;
                 }
@@ -21,6 +28,7 @@
 
             &-form {
                 padding: 0 30px !important;
+                min-width: 0;
 
                 input {
                     padding: 5px 20px !important;
@@ -42,6 +50,40 @@
                         }
                         p{
                             text-transform: uppercase;
+                        }
+                    }
+                }
+                .account-section{
+                    position: relative;
+                    font-size: 12px;
+                    font-weight: 600;
+                    letter-spacing: 2px;
+                    height: fit-content;
+                
+                    svg {
+                        margin-right: 2px;
+                    }
+                
+                    p {
+                        text-transform: uppercase;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                    .accounts-choice{
+                        display: none;
+                        width: max-content;
+                        position: absolute;
+                        background-color: aliceblue;
+                        li{
+                            padding: 10px 10px;
+                        }
+                        box-shadow: rgba(50, 50, 93, 0.5) 0px 13px 27px -5px,
+                        rgba(0, 0, 0, 0.5) 0px 8px 16px -8px;
+                    }
+                    &:hover{
+                        .accounts-choice{
+                            display: block;
                         }
                     }
                 }

@@ -1,11 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from .models import Note, User, Menu, Categories, Products
-
-class NoteSerializer(ModelSerializer):
-    class Meta:
-        model = Note 
-        fields = '__all__'
+from .models import User, Menu, Categories, Products, WishList
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -28,8 +23,11 @@ class ProductsSerializer(ModelSerializer):
         model = Products
         fields = '__all__'
 
+class WishListSerializer(ModelSerializer):
+    class Meta:
+        model = WishList
+        fields = '__all__'
 
-        
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     password = serializers.CharField(required=True)
