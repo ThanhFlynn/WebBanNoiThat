@@ -1,11 +1,14 @@
 import React,{useState, useEffect} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const delay = ms => new Promise(
   resolve => setTimeout(resolve, ms)
 );
 
 const ProductCate = ({menu_id, cate_id}) => {
+
+    let navigate = useNavigate();
+
     const list_menu = {
         "1":"Phòng khách",
         "2":"Phòng ăn",
@@ -56,7 +59,7 @@ const ProductCate = ({menu_id, cate_id}) => {
         return str;
     };
 
-    const [product, setProduct] = useState([]);
+    const [products, setProducts] = useState([]);
     const [categories,setCategories] = useState([]);
 
     useEffect(() =>{
@@ -67,7 +70,7 @@ const ProductCate = ({menu_id, cate_id}) => {
     let getProduct = async() =>{
         let response = await fetch('/api/getProductDetail?menu_id='+menu_id+'&cate_id='+cate_id);
         let data = await response.json();
-        setProduct(data);
+        setProducts(data);
         console.log(data);
     }
     let getCategories = async() =>{
@@ -79,6 +82,38 @@ const ProductCate = ({menu_id, cate_id}) => {
     let handleClick = async() =>{
         await delay(1);
         window.location.reload();
+    }
+
+    let AddToCart = (item) =>{
+        let auth_token = sessionStorage.getItem('info-user-token');
+        if(auth_token !== null)
+            postWishList(item, JSON.parse(auth_token));
+        else{
+            alert("Vui lòng đăng nhập để thực hiện thao tác này");
+            navigate("/accounts/login/");
+        }
+    }
+
+    async function postWishList(item, auth_token){
+        let response = await fetch('/api/postWishList/', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'Authentication':'Bearer ' + String(auth_token.access_token)
+            },
+            body: JSON.stringify(item)
+        })
+
+        if(response.status === 401){
+            alert("Hết phiên đăng nhập vui lòng đăng nhập lại!");
+            navigate("/accounts/login/");
+        }
+        else if(response.status === 400){
+            alert("Something wrong!");
+        }else if(response.status === 200){
+            let data = await response.json();
+            alert(data.message);
+        }
     }
 
     return (
@@ -100,16 +135,43 @@ const ProductCate = ({menu_id, cate_id}) => {
                     </div>
                 </div>
                 <div className='row mt-3'>
-                    <div className='col-3'>
+                    <div className='col-md-3 col-12'>
                         <p className='text-uppercase title'>Sản phẩm</p>
                         <div className='list-categories'>
                             {categories.filter(category => category.menu === menu_id).map((category, index) => (
-                                <Link to={"/products/"+formatName(list_menu[menu_id])+"/"+formatName(list_cate[category.id])} key={index} className='mx-3 py-2' onClick={handleClick}>{list_cate[category.id]}</Link>
+                                <Link to={"/products/"+formatName(list_menu[menu_id])+"/"+formatName(list_cate[category.id])} key={index} 
+                                    className={category.id === cate_id ? 'mx-3 py-2 active_cate' : 'mx-3 py-2'} onClick={handleClick}>{list_cate[category.id]}</Link>
                             ))}
                         </div>
                     </div>
-                    <div className='col-9'>
+                    <div className='col-md-9 col-12 all-product-cate'>
                         <p className='text-uppercase title'>{list_cate[cate_id]}</p>
+                        <img src='https://nhadep.com.vn/Uploads/images/anh-danh-muc-san-pham/phong-khach/danh-muc-sofa-da.jpg' className='mt-4' alt="picture-product"></img>
+                        <hr className='mt-4'/>
+                        <div className='display-product-cate'>
+                            <div className='container'>
+                                <div className='row'>
+                                    {products.map((item,index) => {
+                                        return <div key={index} className='product-item col-6 col-md-4 text-center'>
+                                                <div className='product-item-inner'>
+                                                    <Link to={"/products/"+formatName(list_menu[menu_id])+"/"+formatName(list_cate[cate_id])+"/"+item.product_code}>
+                                                        <img src={item["image"]} alt="product-img"></img>
+                                                        <div className='item-content mt-2'>
+                                                            <div className='pro-title d-flex justify-content-between'>
+                                                                <p className='product-name text-start'>{item["name"]}</p>
+                                                                <span onClick={function(event){event.preventDefault();event.stopPropagation();AddToCart(item)}}>
+                                                                    <i className="fa-regular fa-heart"></i>
+                                                                </span>
+                                                            </div>
+                                                            <p className='price text-end mb-2'>{item["price"].toLocaleString('en-US') + "₫"}</p>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                        </div>
+                                    })}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

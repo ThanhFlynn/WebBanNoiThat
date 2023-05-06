@@ -66,8 +66,6 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
         console.log(data);
     }
 
-    const description_content = "<p>"+product.description+"</p>";
-
     return (
         <div className='product-detail'>
             <div className='container'>
@@ -111,9 +109,9 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
                     {product.description ?(
                         <div className='display-description'>
                             <h3>Mô tả sản phẩm</h3>
-                            <div className='description-content mt-3'
-                                dangerouslySetInnerHTML={{__html: description_content}}
-                            />
+                            <div className='mt-3'>
+                                <p className='description-content'>{product.description}</p>
+                            </div>
                         </div>
                     ):null}
                 </div>

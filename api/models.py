@@ -44,7 +44,7 @@ class Products(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['category','-updated', '-created']
+        ordering = ['-updated', '-created']
 
 class WishList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

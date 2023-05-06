@@ -456,6 +456,9 @@
                             font-size: 1.6vw;
                             font-style: italic;
                         }
+                        .description-content{
+                            white-space: pre-line;
+                        }
                     }
                 }
             }
@@ -475,8 +478,29 @@
                     border-bottom: 1px solid #bbbbbb;
                 }
                 .list-categories{
+                    .active_cate{
+                        color: #22419A !important;
+                    }
                     a{
                         display: block ;
+                        &:hover{
+                            text-decoration: underline !important;
+                        }
+                    }
+                }
+                .all-product-cate{
+                    img{
+                        width: 100%;
+                        object-fit: cover;
+                    }
+                    .display-product-cate{
+                        .product-item{
+                            &-inner{
+                                img{
+                                    height: 150px;
+                                }
+                            }
+                        }
                     }
                 }
             }

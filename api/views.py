@@ -242,6 +242,17 @@ def getProducts(request):
     return Response(serializer.data)
 
 @api_view(["GET"])
+def getNewTopProducts(request, pk):
+    if pk == "Top":
+        products = Products.objects.all().order_by('-purchases')[:8]
+        serializer = ProductsSerializer(products, many=True)
+        return Response(serializer.data)
+    elif pk == "New":
+        products = Products.objects.all().order_by('-updated')[:12]
+        serializer = ProductsSerializer(products, many=True)
+        return Response(serializer.data)
+
+@api_view(["GET"])
 def getWishList(request):
     try:
         access_token = request.headers["Authentication"][7:]

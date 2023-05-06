@@ -12,36 +12,20 @@ const HomePage = () => {
   const [newproducts, setNewProducts] = useState([]);
 
   useEffect(() => {
-    getProducts();
+    getTopProducts();
+    getNewProducts();
   },[])
 
-  let getProducts = async() =>{
-      let response = await fetch("/api/getProducts/");
-      let data = await response.json();
-      getTopProduct(data);
-      getNewProduct(data);
+  let getTopProducts = async() =>{
+    let response = await fetch("/api/getNewTopProducts/Top/");
+    let data = await response.json();
+    setTopProducts(data);
   }
 
-  let getTopProduct = (products) =>{
-    let data = products;
-    data.sort(function(a,b){
-      return b["purchases"] - a["purchases"];
-    });
-    let product_item = [];
-    for(let i=0; i<6; ++i)
-        product_item[i] = data[i];
-    setTopProducts(product_item);
-  }
-
-  let getNewProduct = (products) =>{
-    let data = products;
-    data.sort(function(a,b){
-        return Date.parse(a["updated"]) - Date.parse(b["updated"]);
-    });
-    let product_item = [];
-    for(let i=0; i<8; ++i)
-      product_item[i] = data[i];
-    setNewProducts(product_item);
+  let getNewProducts = async() =>{
+    let response = await fetch("/api/getNewTopProducts/New/");
+    let data = await response.json();
+    setNewProducts(data);
   }
 
   return (

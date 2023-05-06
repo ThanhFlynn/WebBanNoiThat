@@ -16,4 +16,5 @@ urlpatterns = [
     path('postWishList/',views.postWishList, name="postWishList"),
     path('deleteItemWishList/',views.deleteItemWishList, name="deleteItemWishList"),
     path('getProductDetail',views.getProductDetail, name="getProductDetail"),
+    path('getNewTopProducts/<str:pk>/',views.getNewTopProducts, name="getNewTopProducts"),
 ]

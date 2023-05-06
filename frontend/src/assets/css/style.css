@@ -505,6 +505,9 @@ ul li {
   font-size: 1.6vw;
   font-style: italic;
 }
+#root .wrapper .main-content .product-page .product-detail .display-description .description-content {
+  white-space: pre-line;
+}
 #root .wrapper .main-content .product-cate {
   padding-top: 30px;
 }
@@ -517,8 +520,21 @@ ul li {
 #root .wrapper .main-content .product-cate .title {
   border-bottom: 1px solid #bbbbbb;
 }
+#root .wrapper .main-content .product-cate .list-categories .active_cate {
+  color: #22419A !important;
+}
 #root .wrapper .main-content .product-cate .list-categories a {
   display: block;
+}
+#root .wrapper .main-content .product-cate .list-categories a:hover {
+  text-decoration: underline !important;
+}
+#root .wrapper .main-content .product-cate .all-product-cate img {
+  width: 100%;
+  object-fit: cover;
+}
+#root .wrapper .main-content .product-cate .all-product-cate .display-product-cate .product-item-inner img {
+  height: 150px;
 }
 #root .wrapper .footer-section {
   position: relative;
