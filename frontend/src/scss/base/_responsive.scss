@@ -102,6 +102,9 @@
 
 
 @media all and (max-width: 768px) {
+    .activeNav {
+        transition: all 0s;
+    }
     #root {
         .wrapper {
             .header {
@@ -124,6 +127,9 @@
                             }
                         p{
                             display: none;
+                        }
+                        .accounts-choice{
+                            left: -70px;
                         }
                     }
                 }

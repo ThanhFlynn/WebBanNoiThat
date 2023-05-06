@@ -1,9 +1,54 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import React,{useState, useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 
 const NewProduct = ({pds}) => {
 
     const navigate = useNavigate();
+
+    const [menus,setMenus] = useState([]);
+    const [categories,setCategories] = useState([]);
+
+    useEffect(() => {
+        getMenu();
+        getCategories();
+    },[])
+
+    let getMenu = async() =>{
+        let response = await fetch('/api/getMenus/');
+        let data = await response.json();
+        setMenus(data);
+    }
+    let getCategories = async() =>{
+        let response = await fetch('/api/getCategories/');
+        let data = await response.json();
+        setCategories(data);
+    }
+
+    let createLinkProduct = (item) =>{
+        let cate = categories.filter((category) => category.id == item.category);
+        let menu = menus.filter((menu) => menu.id == cate[0].menu);
+        let str1 = formatName(menu[0].name);
+        let str2 = formatName(cate[0].name);
+        navigate("/products/"+str1+"/"+str2+"/"+item.product_code);
+    }
+
+    let formatName = (name) =>{
+        let str="";
+        str = name.toLowerCase();
+        str = str.trim();
+        str = str.replaceAll(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+        str = str.replaceAll(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+        str = str.replaceAll(/ì|í|ị|ỉ|ĩ/g, "i");
+        str = str.replaceAll(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+        str = str.replaceAll(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+        str = str.replaceAll(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+        str = str.replaceAll(/đ/g, "d");
+        str = str.replaceAll("-"," ");
+        str = str.replaceAll("   "," ");
+        str = str.replaceAll("  "," ");
+        str = str.replaceAll(" ","-");
+        return str;
+    }
 
     let AddToCart = (item) =>{
         let auth_token = sessionStorage.getItem('info-user-token');
@@ -44,16 +89,18 @@ const NewProduct = ({pds}) => {
                 {pds.map((item,index) => {
                     return <div key={index} className='product-item col-6 col-md-3 col-sm-4 text-center'>
                             <div className='product-item-inner'>
-                                <img src={item["image"]} alt="product-img"></img>
-                                <div className='item-content mt-2'>
-                                    <div className='title d-flex justify-content-between'>
-                                        <p className='product-name'>{item["name"]}</p>
-                                        <span onClick={function(event){event.preventDefault();AddToCart(item)}}>
-                                            <i className="fa-regular fa-heart"></i>
-                                        </span>
+                                <Link to="#" onClick={function(event){event.preventDefault();createLinkProduct(item)}}>
+                                    <img src={item["image"]} alt="product-img"></img>
+                                    <div className='item-content mt-2'>
+                                        <div className='title d-flex justify-content-between'>
+                                            <p className='product-name text-start'>{item["name"]}</p>
+                                            <span onClick={function(event){event.preventDefault();event.stopPropagation();AddToCart(item)}}>
+                                                <i className="fa-regular fa-heart"></i>
+                                            </span>
+                                        </div>
+                                        <p className='price text-end mb-2'>{item["price"].toLocaleString('en-US') + "₫"}</p>
                                     </div>
-                                    <p className='price text-end mb-2'>{item["price"].toLocaleString('en-US') + "₫"}</p>
-                                </div>
+                                </Link>
                             </div>
                     </div>
                 })}

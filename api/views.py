@@ -328,3 +328,50 @@ def deleteItemWishList(request):
             'error_messages': "Something wrong!",
             'error_code': 400
         }, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(["GET"])
+def getProductDetail(request):
+    try:
+        menu_id = request.GET.get("menu_id")
+    except:
+        menu_id = None
+    try:
+        cate_id = request.GET.get("cate_id")
+    except:
+        cate_id = None
+    try:
+        pro_code = request.GET.get("pro_code")
+    except:
+        pro_code = None
+    
+    if pro_code != None:
+        try:
+            product = Products.objects.get(product_code = pro_code)
+            serializer = ProductsSerializer(product, many=False)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except:
+            return Response({
+                'error_message': "Không tìm thấy sản phẩm mã: " + pro_code,
+                'error_code': 404
+            }, status=status.HTTP_404_NOT_FOUND)
+    elif cate_id != None:
+        try:
+            products = Products.objects.filter(category = cate_id)
+            serializer = ProductsSerializer(products, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response({
+                'error_message': "Không tìm thấy sản phẩm mã thuộc category: " + cate_id,
+                'error_code': 404
+            }, status=status.HTTP_404_NOT_FOUND)
+    else:
+        try:
+            categories = Categories.objects.filter(menu = menu_id)
+            products = Products.objects.filter(category__in = categories.values_list("id"))
+            serializer = ProductsSerializer(products, many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        except:
+            return Response({
+                'error_message': "Không tìm thấy sản phẩm mã thuộc menu: " + menu_id,
+                'error_code': 404
+            }, status=status.HTTP_404_NOT_FOUND)

@@ -15,4 +15,5 @@ urlpatterns = [
     path('getWishList/',views.getWishList, name="getWishList"),
     path('postWishList/',views.postWishList, name="postWishList"),
     path('deleteItemWishList/',views.deleteItemWishList, name="deleteItemWishList"),
+    path('getProductDetail',views.getProductDetail, name="getProductDetail"),
 ]

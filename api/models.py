@@ -49,6 +49,7 @@ class Products(models.Model):
 class WishList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.ForeignKey(Products, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-user']

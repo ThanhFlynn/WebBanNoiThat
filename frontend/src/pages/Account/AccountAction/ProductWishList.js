@@ -32,7 +32,6 @@ const ProductWishList = () => {
 
         if(response.status === 200){
             let data = await response.json();
-            console.log(data);
             setPdwish(data);
         }
     }
@@ -82,7 +81,7 @@ const ProductWishList = () => {
                                 <img src={item["image"]} alt="product-img"></img>
                                 <div className='item-content mt-2'>
                                     <div className='title d-flex justify-content-between'>
-                                        <p className='product-name'>{item["name"]}</p>
+                                        <p className='product-name text-start'>{item["name"]}</p>
                                         <span>
                                             <i className="fa-regular fa-heart"></i>
                                         </span>
