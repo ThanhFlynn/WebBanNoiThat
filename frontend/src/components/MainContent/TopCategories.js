@@ -60,8 +60,8 @@ const TopCategories = ({pds}) => {
     }
 
     let createLinkProduct = (item) =>{
-        let cate = categories.filter((category) => category.id == item.category);
-        let menu = menus.filter((menu) => menu.id == cate[0].menu);
+        let cate = categories.filter((category) => category.id === item.category);
+        let menu = menus.filter((menu) => menu.id === cate[0].menu);
         let str1 = formatName(menu[0].name);
         let str2 = formatName(cate[0].name);
         navigate("/products/"+str1+"/"+str2+"/"+item.product_code);
@@ -85,7 +85,7 @@ const TopCategories = ({pds}) => {
         return str;
     }
 
-    let AddToCart = (item) =>{
+    let AddToWishList = (item) =>{
         let auth_token = sessionStorage.getItem('info-user-token');
         if(auth_token !== null)
             postWishList(item, JSON.parse(auth_token));
@@ -128,7 +128,7 @@ const TopCategories = ({pds}) => {
                                     <div className='item-content'>
                                         <div className='title d-flex justify-content-between mt-2'>
                                             <p className='product-name'>{item["name"]}</p>
-                                            <span onClick={function(event){event.preventDefault();event.stopPropagation();AddToCart(item)}}>
+                                            <span onClick={function(event){event.preventDefault();event.stopPropagation();AddToWishList(item)}}>
                                                 <i className="fa-regular fa-heart"></i>
                                             </span>
                                         </div>
@@ -136,7 +136,7 @@ const TopCategories = ({pds}) => {
                                         <div className='product-button'>
                                             <div className='product-button-inner d-flex justify-content-between align-items mt-2 mb-2'>
                                                 <p className='add-to-cart'>Thêm vào giỏ</p>
-                                                <Link to="view-detail" className='view-detail'>Xem thêm</Link>
+                                                <p className='buy-now'>Mua ngay</p>
                                             </div>
                                         </div>
                                     </div>

@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const UpdateAccount = ({user,authTokens}) => {
 
@@ -15,13 +15,13 @@ const UpdateAccount = ({user,authTokens}) => {
 
     const onUpdateAccount = e =>{
         e.preventDefault();
-        if(form.username == "")
+        if(form.username === "")
             form.username = user.username;
-        if(form.email == "")
+        if(form.email === "")
             form.email = user.email;
-        if(form.address == "")
+        if(form.address === "")
             form.address = user.address;
-        if(form.telephone == "")
+        if(form.telephone === "")
             form.telephone = user.telephone;
         user.username = form.username;
         user.email = form.email;

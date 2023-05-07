@@ -56,15 +56,14 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
     const [product, setProduct] = useState({});
 
     useEffect(() =>{
+        let getProduct = async() =>{
+            let response = await fetch('/api/getProductDetail?menu_id='+menu_id+'&cate_id='+cate_id+'&pro_code='+pro_code);
+            let data = await response.json();
+            setProduct(data);
+            console.log(data);
+        }
         getProduct();
     },[]);
-
-    let getProduct = async() =>{
-        let response = await fetch('/api/getProductDetail?menu_id='+menu_id+'&cate_id='+cate_id+'&pro_code='+pro_code);
-        let data = await response.json();
-        setProduct(data);
-        console.log(data);
-    }
 
     return (
         <div className='product-detail'>

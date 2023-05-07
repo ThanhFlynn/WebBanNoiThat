@@ -1,17 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import UpdateAccount from './AccountAction/UpdateAccount';
 import ChangePassword from './AccountAction/ChangePassword';
 import ProductWishList from './AccountAction/ProductWishList';
 
-const delay = ms => new Promise(
-  resolve => setTimeout(resolve, ms)
-);
-
-
 const UserPage = () => {
     let navigate = useNavigate();
-    let [authTokens, setAuthTokens] = useState(()=> sessionStorage.getItem('info-user-token') ? JSON.parse(sessionStorage.getItem('info-user-token')) : null);
+    let authTokens = sessionStorage.getItem('info-user-token') ? JSON.parse(sessionStorage.getItem('info-user-token')) : null;
     let [user, setUser] = useState({});
     let { accountAction }= useParams();
 
@@ -21,12 +16,10 @@ const UserPage = () => {
     }
 
     useEffect(() => {
-        if(authTokens == null){
+        if(authTokens === null){
             navigate('/');
         }
-        getAccount();    
-        if(accountAction === undefined)
-            accountAction = null;
+        getAccount();
     },[])
 
     let getAccount = async() =>{
@@ -58,16 +51,16 @@ const UserPage = () => {
         <div className='container'>
             <div className='row'>
                 <div className='col-12 p-5'>
-                    {accountAction == null ? (
+                    {accountAction === undefined ? (
                         <p>Hello</p>
                     ) : (
-                        accountAction == "update" ? (
+                        accountAction === "update" ? (
                             <UpdateAccount user={user} authTokens={authTokens}/>
                         ):(
-                            accountAction == "wishlist" ? (
+                            accountAction === "wishlist" ? (
                                 <ProductWishList />
                             ):(
-                                accountAction == "changepassword" ? (
+                                accountAction === "changepassword" ? (
                                     <ChangePassword authTokens={authTokens}/>
                                 ):null
                             )

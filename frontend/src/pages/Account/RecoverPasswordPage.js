@@ -35,7 +35,7 @@ const RecoverPasswordPage = () => {
         } else if (form.confirmpassword !== form.password) {
             setErrorConfirmPassword("Passwords do not match");
         } else setErrorConfirmPassword("");
-        if(errorPassword == "" && errorConfirmPassword == ""){
+        if(errorPassword === "" && errorConfirmPassword === ""){
             handleRecover();
         }
     }

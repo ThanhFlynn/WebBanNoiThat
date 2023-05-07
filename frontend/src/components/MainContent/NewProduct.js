@@ -25,8 +25,8 @@ const NewProduct = ({pds}) => {
     }
 
     let createLinkProduct = (item) =>{
-        let cate = categories.filter((category) => category.id == item.category);
-        let menu = menus.filter((menu) => menu.id == cate[0].menu);
+        let cate = categories.filter((category) => category.id === item.category);
+        let menu = menus.filter((menu) => menu.id === cate[0].menu);
         let str1 = formatName(menu[0].name);
         let str2 = formatName(cate[0].name);
         navigate("/products/"+str1+"/"+str2+"/"+item.product_code);

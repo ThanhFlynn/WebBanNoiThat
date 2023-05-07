@@ -31,7 +31,7 @@ const ChangePassword = ({authTokens}) => {
         } else if (form.confirmnewpassword !== form.newpassword) {
             setErrorConfirmNewPassword("Passwords do not match");
         } else setErrorConfirmNewPassword("");
-        if(errorPassword == "" && errorNewPassword == "" && errorConfirmNewPassword == "")
+        if(errorPassword === "" && errorNewPassword === "" && errorConfirmNewPassword === "")
             handleChangePassword();
     }
 
