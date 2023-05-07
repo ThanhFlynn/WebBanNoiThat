@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 const TopCategories = ({pds}) => {
     const config = {
         dots: false,
-        infinite: false,
+        infinite: true,
         slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
