@@ -93,6 +93,39 @@ const DivProduct = ({currentItems}) => {
         deleteItemWishList(item,authTokens);
     }
 
+    let AddToCart = (item) =>{
+        const proInCart  = localStorage.getItem('cart-pro') ? JSON.parse(localStorage.getItem('cart-pro')) : null;
+        console.log(proInCart);
+        if(proInCart === null){
+            let pro = [];
+            pro.push([item,1]);
+            localStorage.setItem('cart-pro',JSON.stringify(pro));
+        }else{
+            let check = false;
+            let checkRemaining = true;
+            proInCart.map(pro => {
+                if(pro[0].id === item.id){
+                    check = true;
+                    if(pro[1] < item.quantity){
+                        pro[1]++;
+                    }
+                    else{
+                        alert("Không còn sản phẩm này!");
+                        checkRemaining = false;
+                    }
+                }
+            })
+            if(!checkRemaining)
+                return;
+            if(!check){
+                proInCart.push([item,1]);
+            }
+            alert("Đã thêm vào giỏ hàng");
+            window.location.reload();
+            localStorage.setItem('cart-pro',JSON.stringify(proInCart));
+        }
+    }
+
     return (
         <>
             {currentItems.map((item,index) => {
@@ -111,6 +144,12 @@ const DivProduct = ({currentItems}) => {
                                         </span>
                                     </div>
                                     <p className='price text-end mb-2'>{item["price"].toLocaleString('en-US') + "₫"}</p>
+                                    <div className='product-button'>
+                                        <div className='product-button-inner d-flex justify-content-between align-items mt-2 mb-2'>
+                                            <button className='add-to-cart' onClick={function(event){event.preventDefault();event.stopPropagation();AddToCart(item)}}>Thêm vào giỏ</button>
+                                            <p className='buy-now'>Mua ngay</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </Link>
                         </div>
@@ -129,7 +168,6 @@ function DivPageProductWish({ itemsPerPage, items }) {
   // (This could be items from props; or items loaded in a local state
   // from an API endpoint with useEffect and useState)
   const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = items.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(items.length / itemsPerPage);
 

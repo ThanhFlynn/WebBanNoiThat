@@ -116,6 +116,39 @@ const TopCategories = ({pds}) => {
             alert(data.message);
         }
     }
+
+    let AddToCart = (item) =>{
+        const proInCart  = localStorage.getItem('cart-pro') ? JSON.parse(localStorage.getItem('cart-pro')) : null;
+        console.log(proInCart);
+        if(proInCart === null){
+            let pro = [];
+            pro.push([item,1]);
+            localStorage.setItem('cart-pro',JSON.stringify(pro));
+        }else{
+            let check = false;
+            let checkRemaining = true;
+            proInCart.map(pro => {
+                if(pro[0].id === item.id){
+                    check = true;
+                    if(pro[1] < item.quantity){
+                        pro[1]++;
+                    }
+                    else{
+                        alert("Không còn sản phẩm này!");
+                        checkRemaining = false;
+                    }
+                }
+            })
+            if(!checkRemaining)
+                return;
+            if(!check){
+                proInCart.push([item,1]);
+            }
+            alert("Đã thêm vào giỏ hàng");
+            window.location.reload();
+            localStorage.setItem('cart-pro',JSON.stringify(proInCart));
+        }
+    }
     
     return (
         <div className="container topCategories">
@@ -135,7 +168,7 @@ const TopCategories = ({pds}) => {
                                         <p className='price text-end'>{item["price"].toLocaleString('en-US') + "₫"}</p>
                                         <div className='product-button'>
                                             <div className='product-button-inner d-flex justify-content-between align-items mt-2 mb-2'>
-                                                <p className='add-to-cart'>Thêm vào giỏ</p>
+                                                <p className='add-to-cart' onClick={function(event){event.preventDefault();event.stopPropagation();AddToCart(item)}}>Thêm vào giỏ</p>
                                                 <p className='buy-now'>Mua ngay</p>
                                             </div>
                                         </div>

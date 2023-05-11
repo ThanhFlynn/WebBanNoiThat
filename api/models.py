@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.safestring import mark_safe
+import locale
 
 # Create your models here.
 
@@ -34,14 +36,19 @@ class Products(models.Model):
     material = models.CharField(max_length=255)
     quantity = models.PositiveIntegerField(blank=False, null=False)
     warranty = models.CharField(max_length=255,blank=True,null=True)
-    image = models.ImageField(upload_to='images')
     description = models.TextField(blank=True,null=True)
+    image = models.ImageField(upload_to='images')
     purchases = models.PositiveBigIntegerField(auto_created=True, default=0)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+    
+    def img_preview(self):
+        return mark_safe('<img src = "{url}" width = "200"/>'.format(
+             url = self.image.url
+         ))
 
     class Meta:
         ordering = ['-updated', '-created']

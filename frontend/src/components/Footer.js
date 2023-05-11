@@ -35,10 +35,10 @@ const Footer = () => {
             </ul>
           </div>
           <div className='col-10 offset-1 col-md-4 offset-md-0 footer-item text-uppercase'>
-            <strong>ABOUT 2MODERN</strong>
+            <strong>ABOUT US</strong>
             <ul className='list-contact'>
               <li>
-                <a href='#'>ABOUT US</a>
+                <a href='#'>ABOUT FURNITURE</a>
               </li>
               <li>
                 <a href='#'>SHOP OUR CATALOG</a>

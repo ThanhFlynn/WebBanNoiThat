@@ -1,7 +1,12 @@
 import React,{useState, useEffect} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
 
 const ProductDetail = ({menu_id, cate_id, pro_code}) => {
+    let navigate = useNavigate();
 
     const list_menu = {
         "1":"Phòng khách",
@@ -65,6 +70,46 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
         getProduct();
     },[]);
 
+    async function waitasecond(){
+        await delay(10);
+        window.location.reload();
+    }
+
+    let AddToCart = (item) =>{
+        const proInCart  = localStorage.getItem('cart-pro') ? JSON.parse(localStorage.getItem('cart-pro')) : null;
+        console.log(proInCart);
+        if(proInCart === null){
+            let pro = [];
+            pro.push([item,1]);
+            localStorage.setItem('cart-pro',JSON.stringify(pro));
+        }else{
+            let check = false;
+            let checkRemaining = true;
+            proInCart.map(pro => {
+                if(pro[0].id === item.id){
+                    check = true;
+                    if(pro[1] < item.quantity){
+                        pro[1]++;
+                    }
+                    else{
+                        alert("Không còn sản phẩm này!");
+                        checkRemaining = false;
+                    }
+                }
+            })
+            if(!checkRemaining)
+                return;
+            if(!check){
+                proInCart.push([item,1]);
+            }
+            alert("Đã thêm vào giỏ hàng");
+            localStorage.setItem('cart-pro',JSON.stringify(proInCart));
+            waitasecond();
+            navigate('/cart');
+            window.location.reload();
+        }
+    }
+
     return (
         <div className='product-detail'>
             <div className='container'>
@@ -100,7 +145,10 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
                                     {product.material ? (
                                         <p><strong>Bảo hành </strong>{product.warranty}</p>
                                     ): null}
-                                    <Link to='#'>Thêm vào giỏ</Link>
+                                    <div className='d-lex'>
+                                        <input type='number' defaultValue={1} min={1} max={product.quantity} className='product_quantity me-3'></input>
+                                        <button onClick={(e) =>{e.preventDefault();AddToCart(product);}}>Thêm vào giỏ</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>            

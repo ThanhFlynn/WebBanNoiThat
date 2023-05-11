@@ -7,10 +7,21 @@ const Header = () => {
   let navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useState(false);
+  const [numberCart, setNumberCart] = useState(0);
 
   useEffect(() => {
     if(sessionStorage.getItem('info-user-token'))
       setIsLogin(true);
+    const proInCart  = localStorage.getItem('cart-pro') ? JSON.parse(localStorage.getItem('cart-pro')) : null;
+    if(proInCart === null)
+      setNumberCart(0);
+    else{
+      let sum=0;
+      proInCart.map(pro =>{
+        sum += Number(pro[1]);
+      })
+      setNumberCart(sum);
+    }
   },[])
 
   let logOut = e =>{
@@ -81,9 +92,9 @@ const Header = () => {
               )}
             </li>
             <li>
-              <Link to="#" className='d-flex align-items-center justify-content-center'>
+              <Link to="/cart" className='d-flex align-items-center justify-content-center'>
                 <i className="fa-solid fa-cart-shopping"></i>
-                <p>giỏ hàng</p>
+                <p>giỏ hàng{numberCart ? "("+numberCart+")" : null}</p>
               </Link>
             </li>
           </ul>

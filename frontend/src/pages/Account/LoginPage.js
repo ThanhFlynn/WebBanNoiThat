@@ -128,7 +128,7 @@ const LoginPage = () => {
                     />
                 </div>
                 <div className="formGroup text-start">
-                    <label className="formLabel mt-3">Password</label>
+                    <label className="formLabel mt-3">Mật khẩu</label>
                     <input
                       className= "form-control form-control-dark"
                       type="password"
@@ -143,7 +143,7 @@ const LoginPage = () => {
             </form>
             ) : (
             <form className='recoverForm mt-5' onSubmit={onRecoverForm}>
-              <h1>Reset Password</h1>
+              <h1>Lấy lại mật khẩu</h1>
               <p>Vui lòng nhập địa chỉ email của bạn dưới đây. Bạn sẽ nhận được một liên kết để thiết lập lại mật khẩu của bạn.</p>   
               {errorRecover ? (
                   <p className="formFieldErrorMessage">{errorRecover}</p>
@@ -158,8 +158,8 @@ const LoginPage = () => {
                   onChange={onRecoverEmail}
                 />
               </div>
-              <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Submit"/>
-              <Link to='#' onClick={toggleShow}>Cancel</Link>
+              <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Gửi"/>
+              <Link to='#' onClick={toggleShow}>Hủy</Link>
             </form>
             )}
           </div>

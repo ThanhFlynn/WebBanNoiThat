@@ -14,6 +14,7 @@ import UserPage from "./pages/Account/UserPage";
 import NavBar from "./components/NavBar";
 import RecoverPasswordPage from "./pages/Account/RecoverPasswordPage";
 import Footer from './components/Footer';
+import Cart from "./pages/Cart/Cart";
 import Page404 from "./pages/Page404";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
                 <Route path=":proid" element={<ProductsPage />} />
               </Route>
             </Route>
+            <Route path="/cart" exact element={<Cart />}/>
             <Route path="*" element={<Page404 />}/>
           </Routes>
         </div>

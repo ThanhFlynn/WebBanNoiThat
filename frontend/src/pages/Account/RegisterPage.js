@@ -80,7 +80,7 @@ const RegisterPage = () => {
                   <p className="formFieldErrorMessage">{errorRegister}</p>
                 ) : null}
                 <div className="formGroup text-start">
-                    <label htmlFor='username' className="formLabel mt-3">Tên đăng nhập :</label>
+                    <label htmlFor='username' className="formLabel mt-3">Tên người dùng :</label>
                     <input
                     className={clsx(
                         "form-control form-control-dark",
@@ -116,7 +116,7 @@ const RegisterPage = () => {
                     ) : null}
                 </div>
                 <div className="formGroup text-start">
-                    <label htmlFor='password' className="formLabel mt-3">Password :</label>
+                    <label htmlFor='password' className="formLabel mt-3">Mật khẩu :</label>
                     <input
                       className={clsx(
                           "form-control form-control-dark",
@@ -136,7 +136,7 @@ const RegisterPage = () => {
                     ) : null}
                 </div>
                 <div className="formGroup text-start">
-                    <label htmlFor='confirmpassword' className="formLabel mt-3">Confirm Password :</label>
+                    <label htmlFor='confirmpassword' className="formLabel mt-3">Xác nhận mật khẩu :</label>
                     <input
                       className={clsx(
                           "form-control form-control-dark",

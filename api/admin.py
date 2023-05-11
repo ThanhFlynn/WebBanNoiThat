@@ -1,11 +1,41 @@
 from django.contrib import admin
+from decimal import Decimal
 
 # Register your models here.
 
 from .models import User, Categories, Products, Menu, WishList
 
-admin.site.register(User)
-admin.site.register(Menu)
-admin.site.register(Categories)
-admin.site.register(Products)
-admin.site.register(WishList)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("id","username","email","is_active")
+    search_fields = ("username","email")
+
+class CategoriesAdmin(admin.ModelAdmin):
+    list_display = ("id","name","menu")
+    list_editable = ("name",)
+    list_filter = ("menu",)
+    search_fields = ("name",)
+
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ("__str__","name")
+    list_editable = ("name",)
+    search_fields = ("name",)
+
+class ProductsAdmin(admin.ModelAdmin):
+    list_display = ("name","product_code","img_preview","price_vnd","quantity","updated","created")
+    list_editable = ("quantity",)
+    list_filter = ("category",)
+    search_fields = ("name", "product_code",)
+    readonly_fields = ['img_preview']
+
+    def price_vnd(self, obj: Products) -> str:
+        return "{:,}".format(obj.price) + "đ"
+
+class WishListAdmin(admin.ModelAdmin):
+    list_display = ("user","products","created")
+    list_filter = ("user",)
+
+admin.site.register(User, UserAdmin)
+admin.site.register(Menu, MenuAdmin)
+admin.site.register(Categories, CategoriesAdmin)
+admin.site.register(Products, ProductsAdmin)
+admin.site.register(WishList, WishListAdmin)

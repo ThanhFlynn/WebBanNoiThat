@@ -67,9 +67,9 @@ const RecoverPasswordPage = () => {
         <div className="row">
           <div className="col-8 offset-2 col-md-6 offset-md-3 text-center">
             <form className='recoverForm mt-5' onSubmit={onRecoverPassword}>
-              <h1>Reset Password</h1>
+              <h1>Điền mật khẩu mới</h1>
               <div className="formGroup text-start">
-                <label htmlFor='password' className="formLabel mt-3">Password:</label>
+                <label htmlFor='password' className="formLabel mt-3">Mật khẩu mới:</label>
                 <input 
                     className=
                           "form-control form-control-dark"
@@ -85,7 +85,7 @@ const RecoverPasswordPage = () => {
                 ) : null}
               </div>
               <div className="formGroup text-start">
-                    <label htmlFor='confirmpassword' className="formLabel mt-3">Confirm password:</label>
+                    <label htmlFor='confirmpassword' className="formLabel mt-3">Xác nhận mật khẩu mới:</label>
                     <input
                     className="form-control form-control-dark"
                     type="password"
@@ -99,7 +99,7 @@ const RecoverPasswordPage = () => {
                     </p>
                 ) : null}
               </div>
-              <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Submit"/>
+              <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Gửi"/>
             </form>
           </div>
         </div>
