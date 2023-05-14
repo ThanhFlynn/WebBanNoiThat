@@ -5,7 +5,7 @@ const ListItcon = () => {
     <div className='list-icon'>
         <div class="container">
             <div class="section__title--small center text-center">
-                <font _mstmutation="1" >As Seen In</font>
+                <font _mstmutation="1">Các thương hiệu đồng hành</font>
             </div>
             <div class="grid grid-flex featured-icon-container d-flex">
                 <div class="grid__item grid-2 grid-md-6 grid-sm-6">

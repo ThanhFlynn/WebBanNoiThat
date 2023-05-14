@@ -156,7 +156,7 @@ const DivProduct = ({currentItems}) => {
                                             <i className="fa-regular fa-heart"></i>
                                         </span>
                                     </div>
-                                    <p className='price text-end mb-2'>{item["price"].toLocaleString('en-US') + "₫"}</p>
+                                    <p className='price text-end mb-2'>{item["selling_price"].toLocaleString('en-US') + "₫"}</p>
                                     <div className='product-button'>
                                         <div className='product-button-inner d-flex justify-content-between align-items mt-2 mb-2'>
                                             <p className='add-to-cart' onClick={function(event){event.preventDefault();event.stopPropagation();AddToCart(item)}}>Thêm vào giỏ</p>

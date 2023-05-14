@@ -132,10 +132,10 @@ const DivProduct = ({currentItems}) => {
     return (
         <>
             {currentItems.map((item,index) => {
-                return <div key={index} className='product-item col-6 col-md-3 col-sm-4 text-center'>
+                return <div key={index} className='product-item col-6 col-md-4 col-lg-3 text-center'>
                         <div className='product-item-inner'>
                             <Link to={"/products/"+formatName(list_menu[formatName(list_cate[item.category])])+"/"+formatName(list_cate[item.category])+"/"+item.product_code}>
-                                <span className='delete-item' onClick={(event) =>{event.preventDefault();event.stopPropagation(); handleDeleteItem(item);}}>
+                                <span className='delete-item' onClick={(event) =>{event.preventDefault();event.stopPropagation(); if(window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi danh sách yêu thích")) handleDeleteItem(item);}}>
                                     <i class="fa-regular fa-circle-xmark"></i>
                                 </span>
                                 <img src={item["image"]} alt="product-img"></img>
@@ -146,10 +146,10 @@ const DivProduct = ({currentItems}) => {
                                             <i className="fa-regular fa-heart"></i>
                                         </span>
                                     </div>
-                                    <p className='price text-end mb-2'>{item["price"].toLocaleString('en-US') + "₫"}</p>
+                                    <p className='price text-end mb-2'>{item["selling_price"].toLocaleString('en-US') + "₫"}</p>
                                     <div className='product-button'>
                                         <div className='product-button-inner d-flex justify-content-between align-items mt-2 mb-2'>
-                                            <button className='add-to-cart' onClick={function(event){event.preventDefault();event.stopPropagation();AddToCart(item)}}>Thêm vào giỏ</button>
+                                            <p className='add-to-cart' onClick={function(event){event.preventDefault();event.stopPropagation();AddToCart(item)}}>Thêm vào giỏ</p>
                                             <p className='buy-now'>Mua ngay</p>
                                         </div>
                                     </div>

@@ -151,7 +151,7 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
                                 <div className='display-product-content col-12 col-md-6'>
                                     <h3>{product.name}</h3>
                                     <p>Mã SP: {product.product_code}</p>
-                                    <p className='price'>{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(product.price)}₫</p>
+                                    <p className='price'>{new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(product.selling_price)}₫</p>
                                     <p><strong>Kích thước(cm) </strong>{product.size}</p>
                                     <p><strong>Chất liệu </strong>{product.material}</p>
                                     {product.material ? (

@@ -75,7 +75,7 @@ const RegisterPage = () => {
   return (
     <div className="container" style={{marginTop:120+"px"}}> 
         <div className="row">
-          <div className="col-8 offset-2 col-md-6 offset-md-3 text-center">
+          <div className="col-8 offset-2 col-md-6 offset-md-3 text-center register-page">
             {isRegister === false ? (
             <form className="registerForm mt-1 mb-5" onSubmit={onSubmitForm}>
                 <h1>Đăng ký</h1>
@@ -158,53 +158,14 @@ const RegisterPage = () => {
                     </p>
                     ) : null}
                 </div>
-                {/* <div className="formGroup text-start">
-                    <label htmlFor='address' className="formLabel mt-3">Địa chỉ :</label>
-                    <input
-                      className={clsx(
-                          "form-control form-control-dark",
-                          errors.address.dirty && errors.address.error && "formFieldError"
-                      )}
-                      type="text"
-                      aria-label="Address field"
-                      name="address"
-                      id='address'
-                      onChange={onUpdateField}
-                      onBlur={onBlurField}
-                    />
-                    {errors.address.dirty && errors.address.error ? (
-                    <p className="formFieldErrorMessage">
-                      {errors.address.message}
-                    </p>
-                    ) : null}
-                </div>
-                <div className="formGroup text-start">
-                    <label htmlFor='telephone' className="formLabel mt-3">Số điện thoại :</label>
-                    <input
-                      className={clsx(
-                          "form-control form-control-dark",
-                          errors.telephone.dirty && errors.telephone.error && "formFieldError"
-                      )}
-                      type="text"
-                      aria-label="Telephone field"
-                      name="telephone"
-                      id='telephone'
-                      onChange={onUpdateField}
-                      onBlur={onBlurField}
-                    />
-                    {errors.telephone.dirty && errors.telephone.error ? (
-                    <p className="formFieldErrorMessage">
-                      {errors.telephone.message}
-                    </p>
-                    ) : null}
-                </div> */}
                 <input className="formSubmitBtn bg-success text-white mt-4 mb-3" type="submit" value="Tạo"/>
                 <p>Đã có tài khoản?</p>
                 <Link to="/accounts/login/">Đăng nhập</Link>
             </form>
             ) : (
-              <div className='fst-italic' style={{marginTop:100+"px"}}>
+              <div className='fst-italic' style={{paddingTop:100+"px"}}>
                 <h1>Đăng ký thành công</h1>
+                <p>Link kích hoạt tài khoản đã được gửi tới email của bạn</p>
                 <Link to="/accounts/login/" className='text-decoration-underline'>Đăng nhập</Link>
               </div>
             )}

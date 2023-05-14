@@ -16,6 +16,7 @@ from .tokens import account_activation_token
 import jwt
 
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.db.models import Q
 
 # Create your views here.
 
@@ -402,3 +403,19 @@ def getProductDetail(request):
                 'error_message': "Không tìm thấy sản phẩm mã thuộc menu: " + menu_id,
                 'error_code': 404
             }, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(["GET"])
+@ensure_csrf_cookie
+def searchProduct(request):
+    keyword = request.GET.get('keyword')
+
+    products = Products.objects.filter(
+        Q(product_code__icontains = keyword) |
+        Q(name__icontains = keyword) |
+        Q(material__icontains = keyword) |
+        Q(category__name__icontains = keyword)
+    )
+
+    serializer = ProductsSerializer(products, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)

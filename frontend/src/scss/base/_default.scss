@@ -1,0 +1,46 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#root {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+
+    .wrapper {
+        width: 100%;
+        height: 100%;
+
+        .main-content {
+            width: 100%;
+        }
+    }
+}
+
+.activeNav {
+    transform: translateX(100%);
+    transition: all 1.5s;
+}
+
+a {
+    text-decoration: none !important;
+    color: #000000 !important;
+}
+
+p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+ul {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    li {
+        list-style: none;
+    }
+}

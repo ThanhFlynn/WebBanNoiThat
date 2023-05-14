@@ -46,8 +46,7 @@ const ProductWishList = () => {
                     <h2>Danh sách sản phẩm yêu thích</h2>
                     {pdwish.length === 0? (
                         <h4 className='text-center mt-5'>Chưa có sản phẩm yêu thích nào</h4>
-                    ): null}
-                    <DivPageProductWish itemsPerPage={12} items={pdwish}/>
+                    ): <DivPageProductWish itemsPerPage={12} items={pdwish}/>}
                 </div>
             </div>
         </div>

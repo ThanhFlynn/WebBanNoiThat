@@ -9,69 +9,69 @@ const Footer = () => {
       <div className='container'>
         <div className='row'>
           <div className='col-10 offset-1 col-md-4 offset-md-0 footer-item text-uppercase'>
-            <strong>HELP & SUPPORT</strong>
+            <strong>Trợ giúp & Hỗ trợ</strong>
             <ul className='list-contact'>
               <li>
-                <a href='#'>CONTACT US</a>
+                <a href='#'>Liên hệ với chúng tôi</a>
               </li>
               <li>
-                <a href='#'>ORDERING</a>
+                <a href='#'>Đặt hàng</a>
               </li>
               <li>
                 <a href='#'>SHIPPING</a>
               </li>
               <li>
-                <a href='#'>CANCELS & RETURNS</a>
+                <a href='#'>Hủy & Trả hàng</a>
               </li>
               <li>
-                <a href='#'>DISCOUNTS & EXCLUSIONS</a>
+                <a href='#'>Giảm giá</a>
               </li>
               <li>
-                <a href='#'>GIFT CARDS</a>
+                <a href='#'>Thẻ quà tặng</a>
               </li>
               <li>
-                <a href='#'>SECURE SHOPPING</a>
+                <a href='#'>Mua sắm an toàn</a>
               </li>
             </ul>
           </div>
           <div className='col-10 offset-1 col-md-4 offset-md-0 footer-item text-uppercase'>
-            <strong>ABOUT US</strong>
+            <strong>Về chúng tôi</strong>
             <ul className='list-contact'>
               <li>
-                <a href='#'>ABOUT FURNITURE</a>
+                <a href='#'>Về FURNITURE</a>
               </li>
               <li>
-                <a href='#'>SHOP OUR CATALOG</a>
+                <a href='#'>Mua theo danh mục</a>
               </li>
               <li>
-                <a href='#'>TRADE PROGRAM</a>
+                <a href='#'>Chương trình thương mại</a>
               </li>
               <li>
-                <a href='#'>SUSTAINABILITY</a>
+                <a href='#'>Sự bền vững</a>
               </li>
               <li>
-                <a href='#'>PRESS</a>
+                <a href='#'>Điểm nhấn</a>
               </li>
               <li>
-                <a href='#'>DESIGN BLOG</a>
+                <a href='#'>Thiết kế BLOG</a>
               </li>
               <li>
-                <a href='#'>ACCESSIBILITY</a>
+                <a href='#'>Khả năng tiếp cận</a>
               </li>
             </ul>
           </div>
           <div className='col-10 offset-1 col-md-4 offset-md-0 footer-item'>
             <div className='part-text'>
-              <strong>TRADE PROGRAM</strong>
-              <p>Join our Trade Program for access to trade pricing and benefits.</p>
+              <strong>Chương trình thương mại</strong>
+              <p>Tham gia Chương trình Thương mại của chúng tôi để tiếp cận giá cả và lợi ích thương mại.</p>
             </div>
             <div className='part-text'>
-              <strong>CUSTOMER SERVICE</strong>
+              <strong>DỊCH VỤ KHÁCH HÀNG</strong>
               <p>1-888-222-4410 | 6am-4pm PT M-F</p>
             </div>
             <div className='part-text'>
-              <strong>GET THE LATEST</strong>
-              <p>Join our list for exclusive access to events.</p>
+              <strong>Mới nhất</strong>
+              <p>Tham gia danh sách của chúng tôi để truy cập độc quyền vào các sự kiện.</p>
             </div>
             <div className='social-media d-flex'>
               <i class="fa-brands fa-facebook"></i>

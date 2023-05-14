@@ -8,6 +8,7 @@ const Header = () => {
 
   const [isLogin, setIsLogin] = useState(false);
   const [numberCart, setNumberCart] = useState(0);
+  const [searchText, setSearchText] = useState();
 
   useEffect(() => {
     if(sessionStorage.getItem('info-user-token'))
@@ -46,6 +47,18 @@ const Header = () => {
     }
   }
 
+  let handleChangeSearchText = e =>{
+    if(e.target.value.trim() !== "")
+      setSearchText(e.target.value.trim());
+    console.log(e.target.value);
+  }
+
+  let handleSearch = e =>{
+    e.preventDefault();
+    navigate('search?keyword='+searchText);
+    window.location.reload();
+  }
+
   return (
     <div className="header bg-white p-3 position-fixed top-0 start-0">
       <div className="container-fluid">
@@ -59,8 +72,8 @@ const Header = () => {
               <p>Furniture</p>
             </a>
           </div>
-          <form action='' className='header-form flex-grow-1 postion-relative'>
-            <input type="search" class="form-control form-control-dark" placeholder="Tìm kiếm..." aria-label="Search"></input>
+          <form onSubmit={handleSearch} className='header-form flex-grow-1 postion-relative'>
+            <input type="search" class="form-control form-control-dark" placeholder="Tìm kiếm..." aria-label="Search" onChange={handleChangeSearchText} required></input>
           </form>
           <ul className='header-action d-flex align-items-center justify-content-center'>
             <li>
