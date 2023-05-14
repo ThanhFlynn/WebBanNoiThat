@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const UpdateAccount = ({user,authTokens}) => {
 
     let navigate = useNavigate();
+    const csrftoken = Cookies.get('csrftoken');
 
     const [form, setForm] = useState({
         username: "",
@@ -35,7 +37,8 @@ const UpdateAccount = ({user,authTokens}) => {
             method:'PUT',
             headers:{
                 'Content-Type':'application/json',
-                'Authentication':'Bearer ' + String(authTokens.access_token)
+                'Authentication':'Bearer ' + String(authTokens.access_token),
+                'X-CSRFToken' : csrftoken
             },
             body: JSON.stringify(user),
         })

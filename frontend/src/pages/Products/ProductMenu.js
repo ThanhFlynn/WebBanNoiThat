@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import DivPageProductMenuCate from '../../components/PageProduct/DivPageProductMenuCate';
+import Cookies from 'js-cookie';
 
 const delay = ms => new Promise(
   resolve => setTimeout(resolve, ms)
@@ -61,14 +62,23 @@ const ProductMenu = ({menu_id}) => {
     const [categories,setCategories] = useState([]);
 
     useEffect(() =>{
+        const csrftoken = Cookies.get('csrftoken');
         let getProduct = async() =>{
-            let response = await fetch('/api/getProductDetail?menu_id='+menu_id);
+            let response = await fetch('/api/getProductDetail?menu_id='+menu_id, {
+                headers: {
+                    'X-CSRFToken' : csrftoken
+                }
+            });
             let data = await response.json();
             setProducts(data);
         }
 
         let getCategories = async() =>{
-            let response = await fetch('/api/getCategories/');
+            let response = await fetch('/api/getCategories/', {
+                headers: {
+                    'X-CSRFToken' : csrftoken
+                }
+            });
             let data = await response.json();
             setCategories(data);
         }

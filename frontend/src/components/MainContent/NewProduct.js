@@ -1,9 +1,11 @@
 import React,{useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const NewProduct = ({pds}) => {
 
     const navigate = useNavigate();
+    const csrftoken = Cookies.get('csrftoken');
 
     const [menus,setMenus] = useState([]);
     const [categories,setCategories] = useState([]);
@@ -14,12 +16,20 @@ const NewProduct = ({pds}) => {
     },[])
 
     let getMenu = async() =>{
-        let response = await fetch('/api/getMenus/');
+        let response = await fetch('/api/getMenus/', {
+            headers: {
+                'X-CSRFToken' : csrftoken
+            }
+        });
         let data = await response.json();
         setMenus(data);
     }
     let getCategories = async() =>{
-        let response = await fetch('/api/getCategories/');
+        let response = await fetch('/api/getCategories/', {
+            headers: {
+                'X-CSRFToken' : csrftoken
+            }
+        });
         let data = await response.json();
         setCategories(data);
     }
@@ -65,7 +75,8 @@ const NewProduct = ({pds}) => {
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
-                'Authentication':'Bearer ' + String(auth_token.access_token)
+                'Authentication':'Bearer ' + String(auth_token.access_token),
+                'X-CSRFToken' : csrftoken
             },
             body: JSON.stringify(item)
         })

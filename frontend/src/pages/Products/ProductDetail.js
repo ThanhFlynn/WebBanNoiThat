@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const delay = ms => new Promise(
   resolve => setTimeout(resolve, ms)
@@ -58,11 +59,18 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
         return str;
     };
 
+    let soluong = 1;
+
     const [product, setProduct] = useState({});
 
     useEffect(() =>{
+        const csrftoken = Cookies.get('csrftoken');
         let getProduct = async() =>{
-            let response = await fetch('/api/getProductDetail?menu_id='+menu_id+'&cate_id='+cate_id+'&pro_code='+pro_code);
+            let response = await fetch('/api/getProductDetail?menu_id='+menu_id+'&cate_id='+cate_id+'&pro_code='+pro_code, {
+                headers: {
+                    'X-CSRFToken' : csrftoken
+                }
+            });
             let data = await response.json();
             setProduct(data);
             console.log(data);
@@ -80,7 +88,7 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
         console.log(proInCart);
         if(proInCart === null){
             let pro = [];
-            pro.push([item,1]);
+            pro.push([item,soluong]);
             localStorage.setItem('cart-pro',JSON.stringify(pro));
         }else{
             let check = false;
@@ -108,6 +116,10 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
             navigate('/cart');
             window.location.reload();
         }
+    }
+
+    let handcleChange = (number) =>{
+        soluong = Number(number);
     }
 
     return (
@@ -146,7 +158,7 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
                                         <p><strong>Bảo hành </strong>{product.warranty}</p>
                                     ): null}
                                     <div className='d-lex'>
-                                        <input type='number' defaultValue={1} min={1} max={product.quantity} className='product_quantity me-3'></input>
+                                        <input type='number' defaultValue={soluong} min={1} max={product.quantity} onChange={(e)=>handcleChange(e.target.value)} className='product_quantity me-3'></input>
                                         <button onClick={(e) =>{e.preventDefault();AddToCart(product);}}>Thêm vào giỏ</button>
                                     </div>
                                 </div>

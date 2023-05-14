@@ -3,6 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Cookies from 'js-cookie';
 
 const TopCategories = ({pds}) => {
     const config = {
@@ -42,6 +43,7 @@ const TopCategories = ({pds}) => {
     const [settings, setSettings] = useState(config);
     const [menus,setMenus] = useState([]);
     const [categories,setCategories] = useState([]);
+    const csrftoken = Cookies.get('csrftoken');
 
     useEffect(() => {
         getMenu();
@@ -49,12 +51,20 @@ const TopCategories = ({pds}) => {
     },[])
 
     let getMenu = async() =>{
-        let response = await fetch('/api/getMenus/');
+        let response = await fetch('/api/getMenus/', {
+            headers: {
+                'X-CSRFToken' : csrftoken
+            }
+        });
         let data = await response.json();
         setMenus(data);
     }
     let getCategories = async() =>{
-        let response = await fetch('/api/getCategories/');
+        let response = await fetch('/api/getCategories/', {
+            headers: {
+                'X-CSRFToken' : csrftoken
+            }
+        });
         let data = await response.json();
         setCategories(data);
     }
@@ -100,7 +110,8 @@ const TopCategories = ({pds}) => {
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
-                'Authentication':'Bearer ' + String(auth_token.access_token)
+                'Authentication':'Bearer ' + String(auth_token.access_token),
+                'X-CSRFToken' : csrftoken
             },
             body: JSON.stringify(item)
         })

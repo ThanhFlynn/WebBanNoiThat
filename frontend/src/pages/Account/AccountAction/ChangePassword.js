@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
+import Cookies from 'js-cookie';
 
 const ChangePassword = ({authTokens}) => {
+    const csrftoken = Cookies.get('csrftoken');
 
     const [form, setForm] = useState({
         oldpassword:"",
@@ -40,7 +42,8 @@ const ChangePassword = ({authTokens}) => {
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
-                'Authentication':'Bearer ' + String(authTokens.access_token)
+                'Authentication':'Bearer ' + String(authTokens.access_token),
+                'X-CSRFToken' : csrftoken
             },
             body: JSON.stringify(form),
         })

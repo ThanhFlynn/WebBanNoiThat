@@ -3,12 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import UpdateAccount from './AccountAction/UpdateAccount';
 import ChangePassword from './AccountAction/ChangePassword';
 import ProductWishList from './AccountAction/ProductWishList';
+import Cookies from 'js-cookie';
 
 const UserPage = () => {
     let navigate = useNavigate();
     let authTokens = sessionStorage.getItem('info-user-token') ? JSON.parse(sessionStorage.getItem('info-user-token')) : null;
     let [user, setUser] = useState({});
     let { accountAction }= useParams();
+    const csrftoken = Cookies.get('csrftoken');
 
     let logOut = e =>{
         sessionStorage.removeItem('info-user-token');
@@ -27,7 +29,8 @@ const UserPage = () => {
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
-                'Authentication':'Bearer ' + String(authTokens.access_token)
+                'Authentication':'Bearer ' + String(authTokens.access_token),
+                'X-CSRFToken' : csrftoken
             }
         })
         

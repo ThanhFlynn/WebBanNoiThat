@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useRegisterFormValidator } from '../../components/registerForm/hooks/useRegisterFormValidator'; 
 import clsx from 'clsx'
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const RegisterPage = () => {
   let navigate = useNavigate();
+  const csrftoken = Cookies.get('csrftoken');
 
   useEffect(() => {
     if(sessionStorage.getItem('info-user-token'))
@@ -52,7 +54,8 @@ const RegisterPage = () => {
       let response = await fetch(`/api/accounts/register/`,{
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRFToken' : csrftoken
         },
         body: JSON.stringify(form),
       });

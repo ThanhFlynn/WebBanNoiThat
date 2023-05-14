@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const LoginPage = () => {
 
   let navigate = useNavigate();
+  const csrftoken = Cookies.get('csrftoken');
 
   useEffect(() => {
     if(sessionStorage.getItem('info-user-token'))
@@ -46,7 +48,8 @@ const LoginPage = () => {
     fetch(`/api/accounts/login/`,{
       method: "POST",
       headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-CSRFToken' : csrftoken
       },
       body: JSON.stringify(form),
     })
@@ -82,7 +85,8 @@ const LoginPage = () => {
       let response = await fetch(`/api/accounts/recoverPassword/`,{
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRFToken' : csrftoken
         },
         body: JSON.stringify(recoverEmail),
       });

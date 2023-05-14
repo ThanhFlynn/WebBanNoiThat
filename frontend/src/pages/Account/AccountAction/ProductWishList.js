@@ -1,10 +1,12 @@
 import React,{useState, useEffect} from 'react'
 import DivPageProductWish from '../../../components/PageProduct/DivPageProductWish';
+import Cookies from 'js-cookie';
 
 const ProductWishList = () => {
     const [pdwish, setPdwish] = useState([]);
-
+    
     useEffect(() => {
+        const csrftoken = Cookies.get('csrftoken');
         const authTokens = sessionStorage.getItem('info-user-token') ? JSON.parse(sessionStorage.getItem('info-user-token')) : null;
         let logOut = () =>{
             sessionStorage.removeItem('info-user-token');
@@ -15,7 +17,8 @@ const ProductWishList = () => {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json',
-                    'Authentication':'Bearer ' + String(authTokens.access_token)
+                    'Authentication':'Bearer ' + String(authTokens.access_token),
+                    'X-CSRFToken' : csrftoken
                 }
             })
             

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const DivProduct = ({currentItems}) => {
 
     let navigate = useNavigate();
+    const csrftoken = Cookies.get('csrftoken');
 
     const authTokens = sessionStorage.getItem('info-user-token') ? JSON.parse(sessionStorage.getItem('info-user-token')) : null;
 
@@ -76,7 +78,8 @@ const DivProduct = ({currentItems}) => {
             method:'DELETE',
             headers:{
                 'Content-Type':'application/json',
-                'Authentication':'Bearer ' + String(auth_token.access_token)
+                'Authentication':'Bearer ' + String(auth_token.access_token),
+                'X-CSRFToken' : csrftoken
             },
             body: JSON.stringify(item)
         })

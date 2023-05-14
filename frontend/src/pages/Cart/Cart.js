@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import { PayPalButton } from "react-paypal-button-v2";
+import PaypalButton from './PaypalButton';
+import { json } from 'react-router-dom';
 
 const Cart = () => {
     const [proInCart, setProInCart]  = useState(localStorage.getItem('cart-pro') ? JSON.parse(localStorage.getItem('cart-pro')) : null);
     const [listQuantity, setListQuantity] = useState([]);
+    const [tygia, setTygia] = useState({});
 
     let countPro = ()=>{
         let sum = 0;
@@ -19,41 +21,33 @@ const Cart = () => {
         return sum;
     }
 
+    useEffect(()=>{
+        fetch('https://api.exchangerate-api.com/v4/latest/VND')
+        .then(response => response.json())
+        .then(data => {setTygia(data["rates"]);console.log(data["rates"]);})
+    },[])
+
     let handleChangeQuantity = (_quantity,index) =>{
         proInCart.map((pro,idx) => listQuantity[idx] = pro[1]);
         listQuantity[index] = _quantity;
+        proInCart.map((pro,idx) => pro[1] = Number(listQuantity[idx]));
         console.log(JSON.stringify(listQuantity));
     }
 
-    let handleUpdateCart = ()=>{    
-        listQuantity.map((_quantity, idx) => proInCart[idx][1] = _quantity);
-        localStorage.setItem('cart-pro',JSON.stringify(proInCart));
+    let handleUpdateCart = ()=>{
+        let pIC = proInCart.filter(pro=>{
+            return pro[1] !==0;
+        });
+        console.log(pIC);
+        localStorage.setItem('cart-pro',JSON.stringify(pIC));
         window.location.reload();
     }
-
-    const paypalOptions = {
-        clientId:"AWUKbrr2Jn0lge4O0yqiyR3vlYF4AwCjItV9nUixOuPhLcduUZCD1NKTEyMsCvDlBWReyvfCKZ-sVPw-",
-        currency: "USD"
-    }
-
-    const onSuccess = () => {
-        // Xử lý khi thanh toán thành công
-        console.log("Success!");
-    };
-
-    const onCancel = () => {
-        // Xử lý khi người dùng huỷ thanh toán
-        console.log("Cancel!");
-    };
-
-    const onError = () => {
-        // Xử lý khi xảy ra lỗi
-    };
 
     return (
         <div className='display-cart'>
             <div className='container'>
                 <h3>Giỏ hàng của tôi</h3>
+                {countPro() !== 0? (
                 <div className='row mb-3'>
                     <div className='col-12 col-lg-9'>
                         <div className='container'>
@@ -120,17 +114,14 @@ const Cart = () => {
                                 <p>{new Intl.NumberFormat('en-VN', { thousandSeparator: "," }).format(totalPrice() * 1.02)}₫</p>
                             </div>
                             <div className='mt-4'>
-                                <PayPalButton
-                                    amount={(totalPrice()*1.02 / 23470)}
-                                    options={paypalOptions}
-                                    onSuccess={onSuccess}
-                                    onCancel={onCancel}
-                                    onError={onError}
-                                    />
+                                <PaypalButton price={totalPrice()*1.02 * tygia["USD"]}/>
                             </div>
                         </div>
                     </div>
                 </div>
+                ):(
+                    <h4>Không có sản phẩm nào trong giỏ hàng</h4>
+                )}
             </div>
         </div>
     )

@@ -15,9 +15,12 @@ from .serializers import UserSerializer, UserLoginSerializer, MenuSerializer, Ca
 from .tokens import account_activation_token
 import jwt
 
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 # Create your views here.
 
 @api_view(['POST'])
+@ensure_csrf_cookie
 def UserRegisterView(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
@@ -77,6 +80,7 @@ def activate(request):
         return redirect('/#/accounts/register/')
     
 @api_view(['POST'])
+@ensure_csrf_cookie
 def UserLoginView(request):
     serializer = UserLoginSerializer(data=request.data)
     if serializer.is_valid():
@@ -114,6 +118,7 @@ def UserLoginView(request):
     }, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@ensure_csrf_cookie
 def getAccount(request):
 
     if request.method == 'GET':
@@ -126,6 +131,7 @@ def getAccount(request):
         return UserController.deleteAccount(request)
     
 @api_view(['POST'])
+@ensure_csrf_cookie
 def recoverPassword(request):
     email = request.data["email"]
     try:
@@ -168,6 +174,7 @@ def recoverPassword(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["POST"])
+@ensure_csrf_cookie
 def doRecoverPassword(request):
     password = request.data["password"]
     try:
@@ -190,6 +197,7 @@ def doRecoverPassword(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@ensure_csrf_cookie
 def changePW(request):
     try:
         access_token = request.headers["Authentication"][7:]
@@ -224,24 +232,28 @@ def changePW(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["GET"])
+@ensure_csrf_cookie
 def getMenus(request):
     menu = Menu.objects.all()
     serializer = MenuSerializer(menu, many=True)
     return Response(serializer.data)
 
 @api_view(["GET"])
+@ensure_csrf_cookie
 def getCategories(request):
     categories = Categories.objects.all()
     serializer = CategoriesSerializer(categories, many=True)
     return Response(serializer.data)
 
 @api_view(["GET"])
+@ensure_csrf_cookie
 def getProducts(request):
     products = Products.objects.all()
     serializer = ProductsSerializer(products, many=True)
     return Response(serializer.data)
 
 @api_view(["GET"])
+@ensure_csrf_cookie
 def getNewTopProducts(request, pk):
     if pk == "Top":
         products = Products.objects.all().order_by('-purchases')[:8]
@@ -253,6 +265,7 @@ def getNewTopProducts(request, pk):
         return Response(serializer.data)
 
 @api_view(["GET"])
+@ensure_csrf_cookie
 def getWishList(request):
     try:
         access_token = request.headers["Authentication"][7:]
@@ -276,6 +289,7 @@ def getWishList(request):
         }, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(["POST"])
+@ensure_csrf_cookie
 def postWishList(request):
     try:
         access_token = request.headers["Authentication"][7:]
@@ -308,6 +322,7 @@ def postWishList(request):
         }, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(["DELETE"])
+@ensure_csrf_cookie
 def deleteItemWishList(request):
     try:
         access_token = request.headers["Authentication"][7:]
@@ -341,6 +356,7 @@ def deleteItemWishList(request):
         }, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(["GET"])
+@ensure_csrf_cookie
 def getProductDetail(request):
     try:
         menu_id = request.GET.get("menu_id")

@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import {useParams,useNavigate} from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const RecoverPasswordPage = () => {
     let navigate = useNavigate();
+    const csrftoken = Cookies.get('csrftoken');
     let { sid }= useParams();
     const [form, setForm] = useState({
         password: "",
@@ -45,7 +47,8 @@ const RecoverPasswordPage = () => {
         let response = await fetch(`/api/accounts/doRecoverPassword?${sid}`,{
           method: "POST",
           headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'X-CSRFToken' : csrftoken
           },
           body: JSON.stringify(form),
         });
