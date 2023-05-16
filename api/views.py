@@ -9,14 +9,15 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import User, Menu, Categories, Products, WishList
+from .models import User, Menu, Categories, Products, WishList, OrderStatus, Order, OrderDetail
 from .utils import UserController
-from .serializers import UserSerializer, UserLoginSerializer, MenuSerializer, CategoriesSerializer, ProductsSerializer, WishListSerializer
+from .serializers import UserSerializer, UserLoginSerializer, MenuSerializer, CategoriesSerializer, ProductsSerializer, WishListSerializer, OrderSerializer
 from .tokens import account_activation_token
 import jwt
 
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.db.models import Q
+from django.conf import settings
 
 # Create your views here.
 
@@ -411,11 +412,47 @@ def searchProduct(request):
 
     products = Products.objects.filter(
         Q(product_code__icontains = keyword) |
-        Q(name__icontains = keyword) |
-        Q(material__icontains = keyword) |
-        Q(category__name__icontains = keyword)
+        Q(name__icontains = keyword)
     )
 
     serializer = ProductsSerializer(products, many=True)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+@ensure_csrf_cookie
+def createOrder(request):
+    try:
+        access_token = request.headers["Authentication"][7:]
+        payload = jwt.decode(jwt=access_token, key=settings.SECRET_KEY, algorithms=['HS256'])
+        user_id = payload["user_id"]
+    except:
+        return Response({
+            'error_messages': "Something wrong!",
+            'error_code': 401
+        }, status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        user = User.objects.get(id=user_id)
+        total_money = 0
+        data = request.data
+        orderStatus = OrderStatus.objects.get(id=1)
+        for x in data:
+            total_money += int(x[0]["selling_price"] * x[1] * 1.02)
+        order = Order(user = user, total_money = total_money,ship_address = user.address, status = orderStatus)
+        order.save()
+        for x in data:
+            product = Products.objects.get(id=x[0]["id"])
+            orderDetail = OrderDetail(order=order,products=product,quantity=x[1])
+            orderDetail.save()
+            product.purchases += x[1]
+            product.quantity -= x[1]
+            product.save()
+
+        return Response({
+            'message': "Đặt hàng thành công"
+        }, status=status.HTTP_200_OK)
+    except:
+        return Response({
+            'error_messages': "Có lỗi xảy ra",
+            'error_code': 400
+        }, status=status.HTTP_400_BAD_REQUEST)

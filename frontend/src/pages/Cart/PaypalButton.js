@@ -22,10 +22,6 @@ const PaypalButton = (price) => {
         // Xử lý khi xảy ra lỗi
     };
 
-    useEffect(() =>{
-        console.log(Number(price.price).toFixed(2));
-    },[])
-
     return (
         <PayPalButton 
             amount={Number(price.price).toFixed(2)}

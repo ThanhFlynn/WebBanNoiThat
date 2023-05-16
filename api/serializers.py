@@ -1,12 +1,16 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from .models import User, Menu, Categories, Products, WishList
+from .models import User, Menu, Categories, Products, WishList, Order, OrderDetail
 
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
         extra_kwargs = {'password': {'write_only': True, 'required': False}}
+
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True)
 
 class MenuSerializer(ModelSerializer):
     class Meta:
@@ -28,6 +32,8 @@ class WishListSerializer(ModelSerializer):
         model = WishList
         fields = '__all__'
 
-class UserLoginSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-    password = serializers.CharField(required=True)
+class OrderSerializer(ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
+

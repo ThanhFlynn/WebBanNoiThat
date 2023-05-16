@@ -51,6 +51,7 @@ class Products(models.Model):
              url = self.image.url
          ))
 
+
     class Meta:
         ordering = ['-updated', '-created']
 
@@ -62,4 +63,27 @@ class WishList(models.Model):
     class Meta:
         ordering = ['user']
 
+class OrderStatus(models.Model):
+    name = models.CharField(blank=False, null=False, max_length=100)
 
+    def __str__(self):
+        return self.name
+
+class Order(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    total_money = models.BigIntegerField(blank=False, null=False)
+    ship_address = models.CharField(max_length=1000, null=False, blank=False)
+    created = models.DateTimeField(auto_now_add=True)
+    status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "DH" + str(self.id)
+    
+class OrderDetail(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    products = models.ForeignKey(Products, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(blank=False, null=False)
+
+    def __str__(self):
+        return "OrderDetail " + str(self.id)

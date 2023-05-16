@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from .models import User
 from .serializers import UserSerializer
 import jwt
-from WebBanNoiThat import settings
+from django.conf import settings
 
 class UserController:
 

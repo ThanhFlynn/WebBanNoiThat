@@ -92,9 +92,12 @@ const Cart = () => {
 
     let handleChangeQuantity = (_quantity,index) =>{
         proInCart.map((pro,idx) => listQuantity[idx] = pro[1]);
-        listQuantity[index] = _quantity;
+        if(Number(_quantity) <= proInCart[index][0].quantity)
+            listQuantity[index] = Number(_quantity);
+        else 
+            listQuantity[index] = proInCart[index][0].quantity;
         proInCart.map((pro,idx) => pro[1] = Number(listQuantity[idx]));
-        console.log(JSON.stringify(listQuantity));
+        console.log(proInCart[index][0].quantity, _quantity,listQuantity);
     }
 
     let handleUpdateCart = ()=>{

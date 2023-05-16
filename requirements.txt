@@ -12,3 +12,4 @@ django_cloudinary_storage==0.3.0
 cloudinary==1.32.0
 django_adminlte3==0.1.6
 paypalcheckoutserver-sdk==1.0.2
+django-mysql==4.9.0
