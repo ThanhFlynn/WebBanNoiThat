@@ -59,7 +59,7 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
         return str;
     };
 
-    let soluong = 1;
+    const [soluong, setSoluong] = useState(1);
 
     const [product, setProduct] = useState({});
 
@@ -90,17 +90,19 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
             let pro = [];
             pro.push([item,soluong]);
             localStorage.setItem('cart-pro',JSON.stringify(pro));
+            navigate('/cart');
+            window.location.reload();
         }else{
             let check = false;
             let checkRemaining = true;
             proInCart.map(pro => {
                 if(pro[0].id === item.id){
                     check = true;
-                    if(pro[1] < item.quantity){
-                        pro[1]++;
+                    if(pro[1] + soluong <= item.quantity){
+                        pro[1]+=soluong;
                     }
                     else{
-                        alert("Không còn sản phẩm này!");
+                        alert("Không đủ sản phẩm này! Bạn hãy giảm số lượng hoặc mua mặt hàng khác");
                         checkRemaining = false;
                     }
                 }
@@ -108,7 +110,7 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
             if(!checkRemaining)
                 return;
             if(!check){
-                proInCart.push([item,1]);
+                proInCart.push([item,soluong]);
             }
             alert("Đã thêm vào giỏ hàng");
             localStorage.setItem('cart-pro',JSON.stringify(proInCart));
@@ -119,7 +121,7 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
     }
 
     let handcleChange = (number) =>{
-        soluong = Number(number);
+        setSoluong(Number(number));
     }
 
     return (

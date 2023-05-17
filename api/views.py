@@ -444,7 +444,7 @@ def createOrder(request):
         order.save()
         for x in data:
             product = Products.objects.get(id=x[0]["id"])
-            orderDetail = OrderDetail(order=order,products=product,quantity=x[1],status=orderStatus)
+            orderDetail = OrderDetail(order=order,products=product,quantity=x[1], created = order.created,status=orderStatus)
             orderDetail.save()
             product.purchases += x[1]
             product.quantity -= x[1]
@@ -510,6 +510,7 @@ def removeOrderDetail(request):
     orderDetail = OrderDetail.objects.get(id = data["id"])
     product = Products.objects.get(id = data["products"])
     product.quantity = product.quantity + data["quantity"]
+    product.purchases = product.purchases - data["quantity"]
     product.save()
     orderDetail.status = orderStatus
     orderDetail.save()

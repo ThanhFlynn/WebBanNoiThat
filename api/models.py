@@ -83,6 +83,7 @@ class OrderDetail(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     products = models.ForeignKey(Products, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(blank=False, null=False)
+    created = models.DateTimeField()
     status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -135,6 +135,8 @@ const TopCategories = ({pds}) => {
             let pro = [];
             pro.push([item,1]);
             localStorage.setItem('cart-pro',JSON.stringify(pro));
+            navigate('/cart');
+            window.location.reload();
         }else{
             let check = false;
             let checkRemaining = true;
