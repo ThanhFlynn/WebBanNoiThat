@@ -1,8 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PaypalButton from './PaypalButton';
+import Cookies from 'js-cookie';
 
 const Cart = () => {
+
+    let navigate = useNavigate();
+
+    let authTokens = sessionStorage.getItem('info-user-token') ? JSON.parse(sessionStorage.getItem('info-user-token')) : null;
+    let [user, setUser] = useState({});
+    let [checkLogin, setCheckLogin] = useState(false);
+    let [thanhToan, setThanhToan] = useState(false);
+    const csrftoken = Cookies.get('csrftoken');
+
     const [proInCart, setProInCart]  = useState(localStorage.getItem('cart-pro') ? JSON.parse(localStorage.getItem('cart-pro')) : null);
     const [listQuantity, setListQuantity] = useState([]);
     const [tygia, setTygia] = useState({});
@@ -84,10 +94,28 @@ const Cart = () => {
         return sum;
     }
 
+    let getAccount = async() =>{
+        let response = await fetch('/api/accounts/detail/', {
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'Authentication':'Bearer ' + String(authTokens.access_token),
+                'X-CSRFToken' : csrftoken
+            }
+        })
+        
+        if(response.status === 200){
+            let data = await response.json();
+            setUser(data);
+            setCheckLogin(true);
+        }
+    }
+
     useEffect(()=>{
         fetch('https://api.exchangerate-api.com/v4/latest/VND')
         .then(response => response.json())
-        .then(data => {setTygia(data["rates"]);})
+        .then(data => {setTygia(data["rates"]);});
+        getAccount();
     },[])
 
     let handleChangeQuantity = (_quantity,index) =>{
@@ -97,7 +125,6 @@ const Cart = () => {
         else 
             listQuantity[index] = proInCart[index][0].quantity;
         proInCart.map((pro,idx) => pro[1] = Number(listQuantity[idx]));
-        console.log(proInCart[index][0].quantity, _quantity,listQuantity);
     }
 
     let handleUpdateCart = ()=>{
@@ -193,8 +220,12 @@ const Cart = () => {
                                 <b>Tổng cộng:</b>
                                 <p>{new Intl.NumberFormat('en-VN', { thousandSeparator: "," }).format(totalPrice() * 1.02)}₫</p>
                             </div>
-                            <div className='mt-4'>
-                                <PaypalButton price={totalPrice()*1.02 * tygia["USD"]}/>
+                            <div className='mt-4 text-center'>
+                                {thanhToan ? (
+                                    <PaypalButton price={totalPrice()*1.02 * tygia["USD"]} pro={proInCart}/>
+                                ) : (
+                                    <button className='thanh-toan' onClick={(e) => {e.preventDefault(); if(checkLogin) {setThanhToan(!thanhToan); if(user.address === null){alert("Vui lòng cập nhật đầy đủ thông tin tài khoản trước khi thanh toán!"); navigate("/accounts/update");};} else{alert("Vui lòng đăng nhập để thanh toán");navigate("/accounts/login/");}}}>Thanh toán</button>
+                                ) }
                             </div>
                         </div>
                     </div>

@@ -11,13 +11,15 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import User, Menu, Categories, Products, WishList, OrderStatus, Order, OrderDetail
 from .utils import UserController
-from .serializers import UserSerializer, UserLoginSerializer, MenuSerializer, CategoriesSerializer, ProductsSerializer, WishListSerializer, OrderSerializer
+from .serializers import UserSerializer, UserLoginSerializer, MenuSerializer, CategoriesSerializer, ProductsSerializer, WishListSerializer, OrderSerializer, OrderDetailSerializer
 from .tokens import account_activation_token
 import jwt
 
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.db.models import Q
 from django.conf import settings
+
+import json
 
 # Create your views here.
 
@@ -438,11 +440,11 @@ def createOrder(request):
         orderStatus = OrderStatus.objects.get(id=1)
         for x in data:
             total_money += int(x[0]["selling_price"] * x[1] * 1.02)
-        order = Order(user = user, total_money = total_money,ship_address = user.address, status = orderStatus)
+        order = Order(user = user, total_money = total_money,ship_address = user.address)
         order.save()
         for x in data:
             product = Products.objects.get(id=x[0]["id"])
-            orderDetail = OrderDetail(order=order,products=product,quantity=x[1])
+            orderDetail = OrderDetail(order=order,products=product,quantity=x[1],status=orderStatus)
             orderDetail.save()
             product.purchases += x[1]
             product.quantity -= x[1]
@@ -456,3 +458,62 @@ def createOrder(request):
             'error_messages': "Có lỗi xảy ra",
             'error_code': 400
         }, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+@ensure_csrf_cookie
+def getConfirmOrder(request):
+    try:
+        access_token = request.headers["Authentication"][7:]
+        payload = jwt.decode(jwt=access_token, key=settings.SECRET_KEY, algorithms=['HS256'])
+        user_id = payload["user_id"]
+    except:
+        return Response({
+            'error_messages': "Something wrong!",
+            'error_code': 401
+        }, status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        fro = int(request.GET.get('fro'))
+        to = int(request.GET.get('to'))
+        statusType = int(request.GET.get('type'))
+
+        orders = Order.objects.filter(user = user_id)
+        if statusType == 1:
+            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status=1)[fro:to]
+        elif statusType == 2:
+            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status__in = [2,3])[fro:to]
+        elif statusType == 4:
+            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status = 4)[fro:to]
+        elif statusType == 5:
+            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status = 5)[fro:to]
+
+        result = []
+        orderDetailsSerializer = OrderDetailSerializer(orderDetails, many=True)
+
+        for x in orderDetailsSerializer.data:
+            product = Products.objects.get(pk = x["products"])
+            productSerializer = ProductsSerializer(product, many=False)
+            result.append([x,productSerializer.data])
+
+        return Response(result, status=status.HTTP_200_OK)
+    
+    except:
+        return Response({
+            'error_messages': "Có lỗi xảy ra",
+            'error_code': 400
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(["DELETE"])
+@ensure_csrf_cookie
+def removeOrderDetail(request):
+    data = request.data
+    orderStatus = OrderStatus.objects.get(id=5)
+    orderDetail = OrderDetail.objects.get(id = data["id"])
+    product = Products.objects.get(id = data["products"])
+    product.quantity = product.quantity + data["quantity"]
+    product.save()
+    orderDetail.status = orderStatus
+    orderDetail.save()
+
+    return Response({
+        'message': "Xóa đơn hàng thành công"
+    },status=status.HTTP_200_OK)

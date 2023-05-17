@@ -792,6 +792,12 @@
                         .paypal-buttons.paypal-buttons-context-iframe.paypal-buttons-label-unknown.paypal-buttons-layout-vertical{
                             z-index: 1;
                         }
+                        .thanh-toan{
+                            border: 1px solid rgba($color: #000000, $alpha: 0.2);
+                            border-radius: 10px;
+                            padding: 5px 10px;
+                            background-color: #368090;
+                        }
                     }
                 }
             }
@@ -877,6 +883,35 @@
                         a {
                             color: #666666 !important;
                         }
+                    }
+                }
+            }
+
+            .order-history{
+                min-height: calc(100vh - 114px);
+                &-header{
+                    border-radius: 10px 10px 0 0;
+                    background-color: #eee;
+                    .nav-item{
+                        border-bottom: 1px solid rgba($color: #000000, $alpha: 0.2);
+                        padding: 20px;
+                        cursor: pointer;
+                    }
+
+                    .active-choice{
+                        border: 1px solid rgba($color: #000000, $alpha: 0.2);
+                        border-radius: 10px 10px 0 0;
+                        border-bottom: none;
+                        background-color: #fff;
+                    }
+                }
+                &-content{
+                    margin-top: 30px;
+                    img{
+                        width: 100%;
+                        height: 150px;
+                        object-fit: cover;
+                        border-radius: 10px;
                     }
                 }
             }

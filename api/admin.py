@@ -42,7 +42,8 @@ class WishListAdmin(admin.ModelAdmin):
 
 class OrderDetailAdmin(admin.ModelAdmin):
     list_select_related = True
-    list_display = ("name_oder_detail","order","products","quantity")
+    list_display = ("name_oder_detail","order","products","quantity","status")
+    list_editable = ("status",)
     search_fields = ("order","products")
     list_filter = ("order",)
 
@@ -52,17 +53,18 @@ class OrderDetailAdmin(admin.ModelAdmin):
 class OrderItemInline(admin.TabularInline):
     model = OrderDetail
     extra = 0
+    list_display = ("products", "quantity","status")
     readonly_fields = ("products", "quantity")
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ("__str__","user","price_vnd","ship_address","format_date","status")
-    list_editable = ("status",)
+    list_display = ("__str__","user","price_vnd","ship_address","date")
+    list_filter = ("user",)
     inlines = [OrderItemInline, ]
 
     def price_vnd(self, obj: Order) -> str:
         return "{:,}".format(obj.total_money) + "đ"
     
-    def format_date(self, obj: Order) -> str:
+    def date(self, obj: Order) -> str:
         return obj.created.strftime("%d-%m-%Y %H:%M:%S")
 
 admin.site.register(User, UserAdmin)

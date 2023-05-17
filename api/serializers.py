@@ -37,3 +37,8 @@ class OrderSerializer(ModelSerializer):
         model = Order
         fields = '__all__'
 
+class OrderDetailSerializer(ModelSerializer):
+    class Meta:
+        model = OrderDetail
+        fields = '__all__'
+

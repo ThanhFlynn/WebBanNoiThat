@@ -1,7 +1,11 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { PayPalButton } from 'react-paypal-button-v2'
+import Cookies from 'js-cookie';
 
-const PaypalButton = (price) => {
+const PaypalButton = ({price,pro}) => {
+
+    const csrftoken = Cookies.get('csrftoken');
+    let authTokens = sessionStorage.getItem('info-user-token') ? JSON.parse(sessionStorage.getItem('info-user-token')) : null;
 
     const paypalOptions = {
         clientId:"AfWQvJ7Oc_0s_KbUFQQqxHWHbGl4xXA2C_LpL_a0JfGiYjkMguQSo19_XxtdySgFrT-FjfS8qnohM85E",
@@ -9,8 +13,28 @@ const PaypalButton = (price) => {
     }
 
     const onSuccess = () => {
-        // Xử lý khi thanh toán thành công
-        console.log("Success!");
+        fetch("/api/createOrder/",{
+            method: "POST",
+            headers:{
+                'Content-Type':'application/json',
+                'Authentication':'Bearer ' + String(authTokens.access_token),
+                'X-CSRFToken' : csrftoken
+            },
+            body: JSON.stringify(pro)
+        })
+        .then(response => {
+            if(response.ok){
+                alert("Thanh toán thành công");
+                localStorage.removeItem('cart-pro');
+                window.location.reload();
+                return response.json();
+            }
+            throw new Error('Something went wrong');
+        })
+        .then(data => console.log(data))
+        .catch((error)=>{
+            console.log(error)
+        });
     };
 
     const onCancel = () => {
@@ -23,8 +47,8 @@ const PaypalButton = (price) => {
     };
 
     return (
-        <PayPalButton 
-            amount={Number(price.price).toFixed(2)}
+        <PayPalButton
+            amount={Number(price).toFixed(2)}
             options={paypalOptions}
             onSuccess={onSuccess}
             onCancel={onCancel}

@@ -4,6 +4,8 @@ import UpdateAccount from './AccountAction/UpdateAccount';
 import ChangePassword from './AccountAction/ChangePassword';
 import ProductWishList from './AccountAction/ProductWishList';
 import Cookies from 'js-cookie';
+import Page404 from '../Page404';
+import OrderHistory from './AccountAction/Order/OrderHistory';
 
 const UserPage = () => {
     let navigate = useNavigate();
@@ -53,9 +55,9 @@ const UserPage = () => {
     return (
         <div className='container'>
             <div className='row'>
-                <div className='col-12 p-5'>
+                <div className='col-12 py-5'>
                     {accountAction === undefined ? (
-                        <p>Hello</p>
+                        <OrderHistory />
                     ) : (
                         accountAction === "update" ? (
                             <UpdateAccount user={user} authTokens={authTokens}/>
@@ -65,7 +67,9 @@ const UserPage = () => {
                             ):(
                                 accountAction === "changepassword" ? (
                                     <ChangePassword authTokens={authTokens}/>
-                                ):null
+                                ):(
+                                    <Page404 />
+                                )
                             )
                         )
                     )}

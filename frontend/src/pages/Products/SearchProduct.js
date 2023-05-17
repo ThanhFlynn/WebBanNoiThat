@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { useSearchParams } from 'react-router-dom'
-import DivPageProductMenuCate from '../../components/PageProduct/DivPageProductMenuCate';
 import DivPageProductWish from '../../components/PageProduct/DivPageProductWish';
 import Cookies from 'js-cookie';
 
