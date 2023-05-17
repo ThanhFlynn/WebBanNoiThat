@@ -126,8 +126,9 @@ class OrderCancel extends React.Component {
             })
             .then((response) => response.json())
             .then(data => {
-                if(data.length === 0)
+                if(data.length < 3)
                     this.setState({
+                        items: this.state.items.concat(data),
                         hasMore: false,
                     });
                 else {

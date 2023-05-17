@@ -114,7 +114,9 @@ class OrderReceived extends React.Component {
     fetchMoreData = () => {
         // a fake async api call like which sends
         // 20 more records in 1 secs
-        this.state.start= this.state.start+3;
+        this.setState({
+            start: this.state.start + 3
+        })
         setTimeout(() => {
             fetch("/api/getConfirmOrder?fro="+this.state.start+"&to="+(this.state.start+3)+"&type=4",{
                 method:'GET',
@@ -126,8 +128,9 @@ class OrderReceived extends React.Component {
             })
             .then((response) => response.json())
             .then(data => {
-                if(data.length === 0)
+                if(data.length < 3)
                     this.setState({
+                        items: this.state.items.concat(data),
                         hasMore: false,
                     });
                 else {
@@ -143,7 +146,7 @@ class OrderReceived extends React.Component {
     render() {
         return (
         <>
-            {checkContent == true ? (
+            {checkContent === true ? (
                 <InfiniteScroll
                 dataLength={this.state.items.length}
                 next={this.fetchMoreData}
