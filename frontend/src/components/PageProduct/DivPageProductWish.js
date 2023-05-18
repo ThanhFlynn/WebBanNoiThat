@@ -99,7 +99,7 @@ const DivProduct = ({currentItems}) => {
     let AddToCart = (item) =>{
         const proInCart  = localStorage.getItem('cart-pro') ? JSON.parse(localStorage.getItem('cart-pro')) : null;
         console.log(proInCart);
-        if(proInCart === null){
+        if(proInCart.length === 0){
             let pro = [];
             pro.push([item,1]);
             localStorage.setItem('cart-pro',JSON.stringify(pro));

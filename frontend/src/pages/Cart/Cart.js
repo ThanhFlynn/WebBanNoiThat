@@ -122,8 +122,10 @@ const Cart = () => {
         proInCart.map((pro,idx) => listQuantity[idx] = pro[1]);
         if(Number(_quantity) <= proInCart[index][0].quantity)
             listQuantity[index] = Number(_quantity);
-        else 
+        else {
             listQuantity[index] = proInCart[index][0].quantity;
+            alert("Sản phẩm này còn lại: " + proInCart[index][0].quantity + ". Vui lòng chọn lại số lượng!");
+        }
         proInCart.map((pro,idx) => pro[1] = Number(listQuantity[idx]));
     }
 

@@ -86,7 +86,7 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
     let AddToCart = (item) =>{
         const proInCart  = localStorage.getItem('cart-pro') ? JSON.parse(localStorage.getItem('cart-pro')) : null;
         console.log(proInCart);
-        if(proInCart === null){
+        if(proInCart.length === 0){
             let pro = [];
             pro.push([item,soluong]);
             localStorage.setItem('cart-pro',JSON.stringify(pro));
@@ -120,8 +120,13 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
         }
     }
 
-    let handcleChange = (number) =>{
-        setSoluong(Number(number));
+    let handcleChange = (number, totalNumber) =>{
+        if(Number(number) <= totalNumber)
+            setSoluong(Number(number));
+        else{
+            alert("Sản phẩm này còn lại: " + totalNumber +". Vui lòng chọn lại số lượng!");
+            setSoluong(totalNumber);
+        }
     }
 
     return (
@@ -160,7 +165,7 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
                                         <p><strong>Bảo hành </strong>{product.warranty}</p>
                                     ): null}
                                     <div className='d-lex'>
-                                        <input type='number' defaultValue={soluong} min={1} max={product.quantity} onChange={(e)=>handcleChange(e.target.value)} className='product_quantity me-3'></input>
+                                        <input type='number' defaultValue={soluong} min={1} max={product.quantity} onChange={(e)=>handcleChange(e.target.value, product.quantity)} className='product_quantity me-3'></input>
                                         <button onClick={(e) =>{e.preventDefault();AddToCart(product);}}>Thêm vào giỏ</button>
                                     </div>
                                 </div>
