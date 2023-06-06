@@ -86,7 +86,7 @@ const ProductDetail = ({menu_id, cate_id, pro_code}) => {
     let AddToCart = (item) =>{
         const proInCart  = localStorage.getItem('cart-pro') ? JSON.parse(localStorage.getItem('cart-pro')) : null;
         console.log(proInCart);
-        if(proInCart.length === 0){
+        if(proInCart === null){
             let pro = [];
             pro.push([item,soluong]);
             localStorage.setItem('cart-pro',JSON.stringify(pro));

@@ -478,13 +478,13 @@ def getConfirmOrder(request):
 
         orders = Order.objects.filter(user = user_id)
         if statusType == 1:
-            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status=1)[fro:to]
+            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status=1).order_by("-created")[fro:to]
         elif statusType == 2:
-            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status__in = [2,3])[fro:to]
+            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status__in = [2,3]).order_by("-created")[fro:to]
         elif statusType == 4:
-            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status = 4)[fro:to]
+            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status = 4).order_by("-created")[fro:to]
         elif statusType == 5:
-            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status = 5)[fro:to]
+            orderDetails = OrderDetail.objects.filter(order__in = orders.values_list("id"), status = 5).order_by("created")[fro:to]
 
         result = []
         orderDetailsSerializer = OrderDetailSerializer(orderDetails, many=True)
